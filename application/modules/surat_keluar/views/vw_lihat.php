@@ -143,6 +143,7 @@
           var length = info.iLength;
           var index = page * length + (iDisplayIndex + 1);
           $('td:eq(0)', row).html(index);
+          if(row.cells[7]) row.cells[7].noWrap = true;
         }
       });
       /*add button tambah*/

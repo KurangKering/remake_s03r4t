@@ -12,8 +12,10 @@ class Surat_masuk extends MY_Controller {
 
 	public function dummy()
 	{
-		$access = '1,2,2,3,4';
-		debug(explode(',', $access));
+		$arr1 = array('1', '2', '5');
+		$arr2 = array('3', '4', '5', '7', '1');
+		$arr3 = array_intersect($arr1, $arr2);
+		debug($arr3);
 	}
 	public function index()
 	{

@@ -319,8 +319,14 @@ class Multi_menu {
 		return $html;
 	} 
 
-
-	public function filter_item($items = array(), $access = array())
+	
+	/**
+	 * filter menus based on database
+	 * @param  array  $items  data from database
+	 * @param  array  $access data from user's groups
+	 * @return [type]         [description]
+	 */
+	private function filter_item($items = array(), $access = array())
 	{
 		$container = array();
 		foreach ($items as $data_item) {
@@ -330,27 +336,11 @@ class Multi_menu {
 				$container[] = $data_item;
 				continue;
 			}
-
-			foreach ($privelege as $priv_item) {
-				if (in_array($priv_item, $access)) {
-					$container[] = $data_item;
-					break;
-				}
+			if (!empty(array_intersect($access, $privelege))) {
+				$container[] = $data_item;
 			}
+
 		}
-		// foreach ($items as $data_item) {
-		// 	$privelege = explode(',', $data_item[$this->menu_access]);
-		// 	foreach ($access as $access_item) {
-		// 		foreach ($privelege as $privelege_item) {
-		// 			if ($privelege_item == $access_item) {
-		// 				$container[] = $data_item;
-		// 				break;
-		// 			}
-		// 		}
-
-		// 	}
-		// }
-
 		return $container;
 	}
     /**
@@ -358,9 +348,9 @@ class Multi_menu {
      * 
      * @param array $items data which would be rendered
      */
-    public function set_items($items = array())
+    public function set_items($items = array(), $access = array())
     {
-    	$tmp = $this->filter_item($items, array('2', '20'));
+    	$tmp = $this->filter_item($items, $access);
     	$this->items = $tmp;
     }
 

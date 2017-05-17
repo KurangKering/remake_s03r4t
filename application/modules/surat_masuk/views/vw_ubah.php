@@ -70,7 +70,7 @@
                       <?php else: ?>
                         <?php $selected = ''; ?>
                       <?php endif ?>
-                      <option value="<?php echo $value['id'] ?>" <?php echo $selected ?>><?php echo $value['nama']?></option>             
+                      <option value="<?php echo $value['id'] ?>" <?php echo $selected ?> ><?php echo $value['nama']?></option>             
                     <?php endforeach ?>
                   </select>
                   <!--  <input id="diposisi_tujuan" name="diposisi_tujuan"   class="form-control" type="text"> -->

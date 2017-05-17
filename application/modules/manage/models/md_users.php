@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Md_arsip extends CI_Model {
+class Md_users extends CI_Model {
 
 	public function __construct()
 	{
@@ -24,29 +24,15 @@ class Md_arsip extends CI_Model {
 		
 		if ($id) {
 			$sql = 'SELECT 
-			surat_arsip.id as id_surat_arsip, 
-			surat_arsip.no_ruang,
-			surat_arsip.no_lemari, 
-			surat_arsip.no_rak, 
-			surat_arsip.no_berkas, 
-			surat_arsip.nomor_arsip, 
-			surat_arsip.tanggal_masuk_arsip, 
-			surat_arsip.nama_penerima, 
-			surat_arsip.nama_penyerah, 
-			surat_arsip.lengkap, 
-			surat_arsip.status, 
-			surat_arsip.keterangan,
-			sys_box_name.nama_box,
-			sys_users.fullname as penerima,
-			ref_eselon.nama as nama_eselon
-			FROM surat_arsip
-			JOIN sys_box_name
-			ON surat_arsip.no_berkas = sys_box_name.id
-			JOIN sys_users 
-			ON surat_arsip.nama_penerima = sys_users.id
-			JOIN ref_eselon
-			ON surat_arsip.no_ruang = ref_eselon.id
-			WHERE surat_arsip.id = ?
+			sys_users.id as userid,
+			sys_users.username,
+			sys_users.fullname,
+			sys_users.email,
+			sys_users.active,
+			sys_users.phone,
+			FROM_UNIXTIME(sys_users.last_login, "%d/%m/%Y") as last_login
+			FROM sys_users
+			WHERE sys_users.id = ?
 			';
 
 			return	$this->db->query($sql, array($id)) ? $this->db->query($sql, array($id))->row_array() : array();
@@ -81,24 +67,16 @@ class Md_arsip extends CI_Model {
 	public function json_select()
 	{
 		$this->datatables->select('
-			surat_arsip.id as id_surat_arsip, 
-			surat_arsip.no_ruang,
-			surat_arsip.no_lemari, 
-			surat_arsip.no_rak, 
-			surat_arsip.no_berkas, 
-			surat_arsip.nomor_arsip, 
-			DATE_FORMAT(surat_arsip.tanggal_masuk_arsip, "%d/%m/%Y") as tanggal_masuk_arsip, 
-			surat_arsip.nama_penerima, 
-			surat_arsip.nama_penyerah, 
-			surat_arsip.lengkap, 
-			surat_arsip.status, 
-			surat_arsip.keterangan,
-			sys_box_name.nama_box,
-			ref_eselon.nama as nama_ruang
+			sys_users.id,
+			sys_users.username,
+			FROM_UNIXTIME(sys_users.last_login, "%d/%m/%Y") as last_login,
+			sys_users.fullname,
+			sys_users.first_name,
+			sys_users.last_name,
+			sys_users.email,
+			sys_users.phone
 			')
-		->from('surat_arsip')
-		->join('sys_box_name', 'surat_arsip.no_berkas = sys_box_name.id')
-		->join('ref_eselon', 'surat_arsip.no_ruang = ref_eselon.id')
+		->from('sys_users')
 		->add_column('nomor_urut', '0')
 		->add_column(
 			'view', 
@@ -110,7 +88,7 @@ class Md_arsip extends CI_Model {
 			title="Detail">
 			<i class="fa fa-info" aria-hidden="true"></i></button>
 
-			<a href="'. base_url('arsip/') .'ubah/$1" 
+			<a href="'. base_url('manage/users/') .'ubah/$1" 
 			class="btn btn-default btn-md" 
 			title="Ubah">
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -118,10 +96,10 @@ class Md_arsip extends CI_Model {
 			<button type="button" 
 			class="btn btn-default btn-md" 
 			data-id="$1" 
-			data-href="arsip/hapus/$1" 
+			data-href="'. base_url('manage/users/') . 'hapus/$1" 
 			data-toggle="modal" 	
 			data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>', 
-			'id_surat_arsip');
+			'id');
 		return $this->datatables->generate();
 
 	}

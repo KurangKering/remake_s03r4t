@@ -1,36 +1,29 @@
 <div class="row" >
   <div class="col-lg-12">
     <div class="ibox ">
-   <!--        <div class="ibox-title">
-            <h5>Drag&amp;Drop</h5>
-            <div class="ibox-tools">
-              <label class="label label-primary">You can drag and drop me to other box.</label>
-            </div>
-        </div> -->
         <div class="ibox-content">
-          <table id="tbl_masuk" class="table table-striped">
+          <table id="tbl_users" class="table table-striped">
             <thead>
               <tr>
-               <th>#</th>
-               <th>No Disposisi</th>
-               <th>Tanggal Masuk</th>
-               <th>Pengirim</th>
-               <th>Perihal</th>
-               <th>Tujuan</th>
-               <th>Status</th>
-               <th>Action</th>
+                 <th>#</th>
+                 <th>Full Name</th>
+                 <th>Username</th>
+                 <th>Email</th>
+                 <th>Phone</th>
+                 <th>Last Login</th>
+                 <th>Action</th>
 
-           </tr>
-       </thead>
-   </table>
-</div>
+             </tr>
+         </thead>
+     </table>
+ </div>
 </div>
 </div>
 </div>
 
 
 <!-- Modal details surat masuk -->
-<div class="modal fade surat-keluar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_detail">
+<div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_detail">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
@@ -82,11 +75,11 @@
             };
         };
 
-        t = $("#tbl_masuk").dataTable({
+        t = $("#tbl_users").dataTable({
 
             initComplete: function() {
                 var api = this.api();
-                $('#tbl_masuk_filter input')
+                $('#tbl_users_filter input')
                 .off('.DT')
                 .on('keyup.DT', function(e) {
                     if (e.keyCode == 13) {
@@ -94,48 +87,48 @@
                     }
                 });
             },
-            
-            
+
             oLanguage: {
                 sProcessing: "loading..."
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "<?php echo base_url('surat_masuk'); ?>/ajax_lihat", "type": "POST"},
+            ajax: {"url": "<?php echo base_url('manage/users'); ?>/ajax_lihat", "type": "POST"},
             columns: [
             {"data" : "nomor_urut" ,
             "orderable": false},
+            {"data": "fullname" },
+            {"data": "username" },
+            {"data": "email" },
+            {"data": "phone" },
+            {"data": "last_login" },
             {
-                "data": "no_lembar_disposisi",
-
+                "data": "view",
+                "orderable" : false
             },
-            {"data": "tgl_masuk"},
-            {"data": "pengirim"},
-            {"data": "perihal"},
-            {"data": "tujuan_text"},
-            {"data": "status_nama"},
-            {"data": "view"},
             ],
             order: [[1, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
+
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
                 var length = info.iLength;
                 var index = page * length + (iDisplayIndex + 1);
                 $('td:eq(0)', row).html(index);
-                if(row.cells[7]) row.cells[7].noWrap = true;
+
+                if(row.cells[8]) row.cells[8].noWrap = true;
             }
-        });
+    });
         
 
         /*add button tambah*/
         $('<button id="tambah" class="btn btn-default">Tambah</button>').click(function(event) {
             /* Act on the event */
-            location.href = '<?php echo base_url('surat_masuk/tambah'); ?>'
+            location.href = '<?php echo base_url('manage/users/tambah'); ?>'
         }).appendTo('div.dataTables_filter');
         /*show modal when deleting data*/
         $('#confirm-delete').on('show.bs.modal', function(e) {
-            $(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id_surat_masuk'));
+            $(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id'));
         });
 
 
@@ -148,52 +141,52 @@
     });
 
 
-//Tampilkan Modal 
-function showDetails(id)
-{
-    $.ajax({
-        url: 'surat_masuk/ajax_detail',
-        type: 'POST',
-        data: {id_surat_masuk : id},
-        cache: false,
-        dataType: 'html',
-//processData: false, // Don't process the files
-//contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-success: function(data, textStatus, jqXHR)
-{
-    $('#modal_detail  .modal-body').html('');
-    $('#modal_detail  .modal-body').html(data);
-    $("#modal_detail").modal("show");
-},
-error: function(jqXHR, textStatus, errorThrown)
-{
-// Handle errors here
-console.log('ERRORS: ' + textStatus);
-// STOP LOADING SPINNER
-}
-});
-}
+    //Tampilkan Modal 
+    function showDetails(id)
+    {
+        $.ajax({
+            url: '<?php echo base_url('manage/users'); ?>/ajax_detail',
+            type: 'POST',
+            data: {id : id},
+            cache: false,
+            dataType: 'html',
+            //processData: false, // Don't process the files
+            //contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+            success: function(data, textStatus, jqXHR)
+            {
+                $('#modal_detail  .modal-body').html('');
+                $('#modal_detail  .modal-body').html(data);
+                $("#modal_detail").modal("show");
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus);
+                // STOP LOADING SPINNER
+            }
+        });
+    }
 
-function doDelete(id)
-{
-    $.ajax({
-        url: 'surat_masuk/ajax_delete_surat_masuk',
-        type: 'POST',
-        data: {id_surat_masuk : id},
-//processData: false, // Don't process the files
-//contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+    function doDelete(id)
+    {
+        $.ajax({
+            url: '<?php echo base_url('manage/users'); ?>/ajax_delete_users',
+            type: 'POST',
+            data: {id : id},
+            //processData: false, // Don't process the files
+            //contentType: false, // Set content type to false as jQuery will tell the server its a query string request
 
-success: function(data, textStatus, jqXHR)
-{
-    t.api().ajax.reload();
-},
-error: function(jqXHR, textStatus, errorThrown)
-{
-// Handle errors here
-console.log('ERRORS: ' + textStatus);
-// STOP LOADING SPINNER
-}
-});
-}
+            success: function(data, textStatus, jqXHR)
+            {
+                t.api().ajax.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus);
+                // STOP LOADING SPINNER
+            }
+        });
+    }
 
 </script>

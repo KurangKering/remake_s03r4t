@@ -1,16 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Arsip extends MY_Controller {
+class Users extends MY_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('md_arsip');
+		$this->load->model('md_users');
 	}
 
 	public function index()
 	{
+		redirect('manage/users/lihat','refresh');
 	}
 
 
@@ -22,69 +23,91 @@ class Arsip extends MY_Controller {
 		/*load js datatables*/
 		$this->template->append_metadata('<script src="'. base_url("assets/plugins/datatables/media/js/jquery.dataTables.min.js") . '"></script>');
 		$this->template->append_metadata('<script src="'. base_url("assets/plugins/datatables/media/js/dataTables.bootstrap.min.js") . '"></script>');
-
-		$this->template->build('vw_lihat');
+		$this->template->title('Lihat | Users');
+		$this->template->build('users/vw_lihat');
 	}
 
 	public function tambah()
 	{
 		
+		$this->template->title('Tambah | Users');
 		$this->form_validation->set_rules(
-			'nomor_arsip',
-			'Nomor Arsip',
-			'trim|is_unique[surat_arsip.nomor_arsip]',
+			'email',
+			'email',
+			'trim|is_unique[sys_users.email]',
 			array(
-				'is_unique' => 'No. Arsip Yang Diinput telah terdaftar !' 
+				'is_unique' => 'Email Telah Terdaftar !' 
+				)
+			);
+		$this->form_validation->set_rules(
+			'username',
+			'Username',
+			'trim|is_unique[sys_users.username]',
+			array(
+				'is_unique' => 'Username Telah Terdaftar !' 
 				)
 			);
 
-		if ($this->form_validation->run() == TRUE) {
+		if ($this->form_validation->run() == true)
+		{
+			$email    = strtolower($this->input->post('email'));
+			$identity = $this->input->post('username');
+			$password = $this->input->post('password');
 
-			$container = array(
-				'tanggal_masuk_arsip' => date_converter($this->input->post('tanggal_masuk_arsip')),
-				'no_ruang'            => $this->input->post('no_ruang'),
-				'no_lemari'           => $this->input->post('no_lemari'),
-				'no_rak'              => $this->input->post('no_rak'),
-				'no_berkas'           => $this->input->post('no_berkas'),
-				'nomor_arsip'         => $this->input->post('nomor_arsip'),
-				'nama_penerima'       => currentUser('id'),
-				'nama_penyerah'       => $this->input->post('nama_penyerah'),
-				'lengkap'             => $this->input->post('lengkap'),
-				'status'              => $this->input->post('status'),
-				'keterangan'          => $this->input->post('keterangan'),
-				'diinput_oleh'        => currentUser('username'),
-				'diinput_tanggal'     => time(),
+			$additional_data = array(
+				'fullname' => $this->input->post('fullname'),
+				'phone'      => $this->input->post('phone'),
+				'active'      => $this->input->post('active'),
 				);
+		}
 
-			$res = $this->md_Global->insert_data('surat_arsip', $container);
-			if ($res) {
-				$this->session->set_flashdata('message', 'Berhasil entry Arsip');
-				redirect('arsip/lihat','refresh');
-			}
-		} 
 
 		else {
 			
 			echo validation_errors();
-			$data['nomor_berkas'] = $this->md_Global->get_data_all('sys_box_name');
-			$data['ref_eselon'] = $this->md_Global->get_data_all('ref_eselon');
 
-
+			$data['groups'] =$this->ion_auth->groups()->result_array();
 			$this->template->append_metadata('<link href="'. base_url("themes/inspinia/css/plugins/iCheck/custom.css").'" rel="stylesheet">');
 			$this->template->append_metadata('<script src="'. base_url("themes/inspinia/js/plugins/iCheck/icheck.min.js") . '"></script>');
 			$this->template->append_metadata('<script src="'. base_url("assets/plugins/parsleyjs/dist/parsley.min.js") . '"></script>');
 			$this->template->append_metadata('<script src="'. base_url("assets/plugins/parsleyjs/dist/i18n/id.js") . '"></script>');
 
 
-			$this->template->build('vw_tambah', $data);
+			$this->template->build('users/vw_tambah', $data);
 		}
+
+
+		if ($this->form_validation->run() == true && $id_user = $this->ion_auth->register($identity, $password, $email, $additional_data))
+		{
+
+			//Update the groups user belongs to
+			$groupData = $this->input->post('groups');
+
+			if (isset($groupData) && !empty($groupData)) {
+				
+				$this->ion_auth->remove_from_group('', $id_user);
+				foreach ($groupData as $grp) {
+					$this->ion_auth->add_to_group($grp, $id_user);
+				}
+
+			}
+
+
+            // check to see if we are creating the user
+            // redirect them back to the admin page
+			$this->session->set_flashdata('message', $this->ion_auth->messages());
+			redirect("manage/users/lihat", 'refresh');
+		}
+
+		
+		
 
 	}
 
 
 	public function ubah($id)
 	{
-		if ($id == null || !$this->md_Global->get_data_where('surat_arsip', array('id' => $id))) {
+		if ($id == null || !$this->md_Global->get_data_where('sys_users', array('id' => $id))) {
 			show_404();
 		}
 
@@ -115,7 +138,7 @@ class Arsip extends MY_Controller {
 			$res = $this->md_Global->update_data('surat_arsip', $container, array('id' => $id));
 			if ($res) {
 				$this->session->set_flashdata('message', 'Berhasil merubah Data Arsip');
-				redirect('arsip/lihat','refresh');
+				redirect('manage/users/lihat','refresh');
 			}
 			else if ($this->db->error()['code'] == 1062) {
 				$this->session->set_flashdata('message', 'Duplikat Nomor Arsip Terdeteksi');
@@ -129,9 +152,7 @@ class Arsip extends MY_Controller {
 			echo validation_errors();
 
 			$data['message']      = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
-			$data['arsip']        = $this->md_Global->get_data_single('surat_arsip', array('id' => $id));
-			$data['nomor_berkas'] = $this->md_Global->get_data_all('sys_box_name');
-			$data['ref_eselon']   = $this->md_Global->get_data_all('ref_eselon');
+			
 			$this->template->build('vw_ubah', $data);
 		}
 
@@ -148,7 +169,7 @@ class Arsip extends MY_Controller {
 
 	public function ajax_lihat()
 	{
-		$var = $this->md_arsip->json_select();
+		$var = $this->md_users->json_select();
 		echo $var;
 	}
 
@@ -156,25 +177,24 @@ class Arsip extends MY_Controller {
 	public function ajax_detail()
 	{
 		$id = $this->input->post('id');
-		$data = $this->md_arsip->select_detail($id);
-
+		$data = $this->md_users->select_detail($id);
+		$groups = $this->ion_auth->get_users_groups($id)->result_array();
 		if($data)
 		{
-			$table     = '<h4>Data Arsip</h4><br/>';
+			$table     = '<h4>Data Diri User</h4><br/>';
 			$table    .= '<table class="table table-condensed table-striped">';
-			$table 	  .= "<tr><td>Nomor Arsip</td><td>".$data['nomor_arsip']."</td></tr>";	
-			$table 	  .= "<tr><td>Tanggal Masuk</td><td>".date_converter($data['tanggal_masuk_arsip'])."</td></tr>";	
-			$table 	  .= "<tr><td>Penerima</td><td>".$data['penerima']."</td></tr>";	
-			$table 	  .= "<tr><td>Penyerah</td><td>".$data['nama_penyerah']."</td></tr>";	
-			$table 	  .= "<tr><td>Ruang</td><td>".$data['nama_eselon']."</td></tr>";	
-			$table 	  .= "<tr><td>Lemari</td><td>".$this->config->item('surat_arsip')['no_lemari'][$data['no_lemari']]."</td></tr>";	
-			$table 	  .= "<tr><td>Rak</td><td>".$this->config->item('surat_arsip')['no_rak'][$data['no_rak']]."</td></tr>";	
-			$table 	  .= "<tr><td>Berkas</td><td>".$data['nama_box']."</td></tr>";	
-			$table 	  .= "<tr><td>Penyerah</td><td>".$data['nama_penyerah']."</td></tr>";	
-			$table 	  .= "<tr><td>Lengkap</td><td>".$data['lengkap']."</td></tr>";	
-			$table 	  .= "<tr><td>Status</td><td>".$this->config->item('surat_arsip')['status'][$data['status']]."</td></tr>";	
-			$table 	  .= "<tr><td>Keterangan</td><td>".$data['keterangan']."</td></tr>";	
-			$table 	  .= '';
+			$table 	  .= "<tr><td>User Id</td><td>".$data['userid']."</td></tr>";	
+			$table 	  .= "<tr><td>Username</td><td>".$data['username']."</td></tr>";	
+			$table 	  .= "<tr><td>Nama Lengkap</td><td>".$data['fullname']."</td></tr>";	
+			$table 	  .= "<tr><td>Email</td><td>".$data['email']."</td></tr>";	
+			$table 	  .= "<tr><td>Active</td><td>".$data['active']."</td></tr>";	
+			$table 	  .= "<tr><td>Nomor HP</td><td>".$data['phone']."</td></tr>";	
+			$table 	  .= "<tr><td>Terakhir Login</td><td>".$data['last_login']."</td></tr>";	
+			$table 	  .= "<tr><td>Groups</td><td>";
+			foreach ($groups as $key => $group) {
+				$table .= $group['name'] . "<br>";
+			}	
+			$table 	  .= '</td>';
 			$table    .= '</table>';
 			echo $table;
 		}
@@ -182,11 +202,17 @@ class Arsip extends MY_Controller {
 
 
 
-	public function ajax_delete_arsip()
+	public function ajax_delete_users()
 	{
+
 		$id  = $this->input->post('id');
+		if ($id == currentUser('id')) {
+			echo 'NO';
+			exit();
+		}
+
 		if ($id) {
-			$result = $this->md_Global->delete_data('surat_arsip', array('id' => $id));
+			$result = $this->md_Global->delete_data('sys_users', array('id' => $id));
 			if ($this->db->error()['code']) {
 				echo json_encode($this->db->error());
 			}

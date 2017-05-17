@@ -14,12 +14,14 @@ class Authentication extends CI_Controller {
 		$this->template->build('vw_akun');
 	}
 
+	
+
 	public function login()
 	{
 		if ($this->ion_auth->logged_in())
 		{
 			// redirect them to the login page
-			redirect('dashboard', 'refresh');
+			redirect('Dashboard', 'refresh');
 		}
 
 		//validate form input
@@ -28,6 +30,7 @@ class Authentication extends CI_Controller {
 
 		if ($this->form_validation->run() == true)
 		{
+
 			// check to see if the user is logging in
 			// check for "remember me"
 			$remember = (bool) $this->input->post('remember');
@@ -37,7 +40,7 @@ class Authentication extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('dashboard', 'refresh');
+				redirect('Dashboard', 'refresh');
 			}
 			else
 			{

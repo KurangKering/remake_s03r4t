@@ -28,7 +28,8 @@ class MY_Controller extends CI_Controller {
 		
 
 		$this->load->library("multi_menu");
-		$this->multi_menu->set_items($items);
+		$groups = $this->ion_auth->get_user_groups();
+		$this->multi_menu->set_items($items, $groups);
 
 
 	}

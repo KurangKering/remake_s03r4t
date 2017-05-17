@@ -11,21 +11,20 @@
           <table id="tbl_arsip" class="table table-striped">
             <thead>
               <tr>
-                 <th>#</th>
-                 <th>Nomor Arsip</th>
-                 <th>Tanggal Masuk</th>
-                 <th>Penyerah</th>
-                 <th>Ruang</th>
-                 <th>Lemari</th>
-                 <th>Rak</th>
-                 <th>Berkas</th>
-                 <th>Status</th>
-                 <th>Action</th>
+               <th>#</th>
+               <th>Nomor Arsip</th>
+               <th>Tanggal Masuk</th>
+               <th>Ruang</th>
+               <th>Lemari</th>
+               <th>Rak</th>
+               <th>Berkas</th>
+               <th>Status</th>
+               <th>Action</th>
 
-             </tr>
-         </thead>
-     </table>
- </div>
+           </tr>
+       </thead>
+   </table>
+</div>
 </div>
 </div>
 </div>
@@ -114,8 +113,7 @@
 
 
             {"data": "tanggal_masuk_arsip"},
-            {"data": "nama_penyerah"},
-            {"data": "no_ruang"},
+            {"data": "nama_ruang"},
             {"data": "no_lemari"},
             {"data": "no_rak"},
             {"data": "nama_box"},
@@ -133,10 +131,11 @@
                 var length = info.iLength;
                 var index = page * length + (iDisplayIndex + 1);
                 $('td:eq(0)', row).html(index);
+                $('td', row).eq(4).html(arrNoLemari[data.no_lemari]);
+                $('td', row).eq(5).html(arrRak[data.no_rak]);
+                $('td', row).eq(7).html(arrstatus[data.status]);
 
-                $('td', row).eq(5).html(arrNoLemari[data.no_lemari]);
-                $('td', row).eq(6).html(arrRak[data.no_rak]);
-                $('td', row).eq(8).html(arrstatus[data.status]);
+                if(row.cells[8]) row.cells[8].noWrap = true;
             }
         //      "createdRow": function ( row, data, index ) {
         //     if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
@@ -195,7 +194,7 @@
     function doDelete(id)
     {
         $.ajax({
-            url: 'surat_masuk/ajax_delete_surat_masuk',
+            url: 'arsip/ajax_delete_arsip',
             type: 'POST',
             data: {id : id},
             //processData: false, // Don't process the files

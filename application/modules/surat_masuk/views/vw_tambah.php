@@ -8,7 +8,7 @@
             </div>
           </div> -->
           <div class="ibox-content">
-            <form id="frm_tambah_surat_masuk" data-parsley-validate class="form-horizontal" method="POST" action="<?php echo base_url('surat_masuk/tambah') ?>" enctype="multipart/form-data">
+            <form id="frm_tambah_surat_masuk" data-parsley-validate class="form-horizontal" method="POST"  enctype="multipart/form-data">
 
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="no_lembar_disposisi">No. Lembar Disposisi
