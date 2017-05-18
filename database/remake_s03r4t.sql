@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `menus` (
   CONSTRAINT `menus_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `menus` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
--- Dumping data for table remake_s03r4t.menus: ~16 rows (approximately)
+-- Dumping data for table remake_s03r4t.menus: ~14 rows (approximately)
 DELETE FROM `menus`;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
 INSERT INTO `menus` (`id`, `parent`, `name`, `icon`, `slug`, `number`, `access`) VALUES
@@ -72,17 +72,15 @@ INSERT INTO `menus` (`id`, `parent`, `name`, `icon`, `slug`, `number`, `access`)
 	(2, NULL, 'Surat Masuk', 'fa fa-envelope', 'surat_masuk', 2, '2,10,30,40'),
 	(3, NULL, 'Surat Keluar', 'fa fa-envelope-o', 'surat_keluar', 3, '0,10,30,40,50,60,70,80,90,100'),
 	(4, NULL, 'Arsip', 'fa fa-book', 'arsip', 4, '0,70,80,90,100'),
-	(5, NULL, 'Disposisi', 'fa fa-exchange', 'disposisi', 5, '0,10,30,40,50,60'),
 	(6, NULL, 'Manage', 'fa fa-group', 'users', 6, '2'),
 	(14, 2, 'Data Surat Masuk', '', 'surat_masuk/lihat', 1, '2,10,30,40'),
-	(15, 2, 'Tambah Surat Masuk', '', 'surat_masuk/tambah', 2, '3'),
+	(15, 2, 'Tambah Surat Masuk', '', 'surat_masuk/tambah', 2, '2'),
 	(16, 3, 'Data Surat Keluar', '', 'surat_keluar/lihat', 1, '0,10,30,40,70,80,90,100'),
 	(17, 3, 'Tambah Surat Keluar', '', 'surat_keluar/tambah', 2, '0,70,80,90,100'),
 	(18, 4, 'Data Arsip', '', 'arsip/lihat', 1, '0,70,80,90,100'),
 	(19, 4, 'Tambah Arsip', '', 'arsip/tambah', 2, '0,70,80,90,100'),
-	(20, 5, 'Data Disposisi', '', 'disposisi/lihat', 1, '0,10,30,40'),
-	(21, 6, 'Manage Users', '', 'manage/users/lihat', 1, '2'),
-	(22, 6, 'Manage Groups', '', 'manage/groups/lihat', 2, '2'),
+	(21, 6, 'Manage Users', '', 'users/lihat', 1, '2'),
+	(22, 6, 'Manage Groups', '', 'groups/lihat', 2, '-1'),
 	(23, NULL, 'Profile', 'fa fa-user', 'profile', 7, '0');
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 
@@ -176,22 +174,23 @@ CREATE TABLE IF NOT EXISTS `surat_arsip` (
   `status` tinyint(1) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT NULL,
   `diinput_oleh` varchar(30) DEFAULT NULL,
-  `diinput_tanggal` int(11) DEFAULT NULL,
-  `diperbaharui_oleh` varchar(30) DEFAULT NULL,
-  `diperbaharui_tanggal` int(11) DEFAULT NULL,
+  `diinput_tanggal` datetime DEFAULT NULL,
+  `diperbaharui_oleh` datetime DEFAULT NULL,
+  `diperbaharui_tanggal` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nomor_arsip` (`nomor_arsip`),
   KEY `FK_surat_arsip_sys_box_name` (`no_berkas`),
   KEY `FK_surat_arsip_sys_users` (`nama_penerima`),
   CONSTRAINT `FK_surat_arsip_sys_box_name` FOREIGN KEY (`no_berkas`) REFERENCES `sys_box_name` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_surat_arsip_sys_users` FOREIGN KEY (`nama_penerima`) REFERENCES `sys_users` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table remake_s03r4t.surat_arsip: ~1 rows (approximately)
+-- Dumping data for table remake_s03r4t.surat_arsip: ~2 rows (approximately)
 DELETE FROM `surat_arsip`;
 /*!40000 ALTER TABLE `surat_arsip` DISABLE KEYS */;
 INSERT INTO `surat_arsip` (`id`, `no_ruang`, `no_lemari`, `no_rak`, `no_berkas`, `nomor_arsip`, `tanggal_masuk_arsip`, `nama_penerima`, `nama_penyerah`, `lengkap`, `status`, `keterangan`, `diinput_oleh`, `diinput_tanggal`, `diperbaharui_oleh`, `diperbaharui_tanggal`) VALUES
-	(8, 1, 1, 1, 1, '4', '1111-01-01', 1, '213', 'Y', 1, ' 1', 'administrator', 1494945166, 'administrator', 1494946980);
+	(8, 1, 1, 1, 1, '4', '2017-05-17', 1, '213', 'Y', 1, ' 1', 'administrator', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2017-05-17 14:38:15'),
+	(10, 1, 1, 1, 1, '1231231212', '2017-05-17', 1, 'qweq', 'Y', 1, ' ', 'administrator', '2017-05-17 14:29:23', '0000-00-00 00:00:00', '2017-05-17 14:36:36');
 /*!40000 ALTER TABLE `surat_arsip` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_dispoisi
@@ -206,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `surat_dispoisi` (
   `disposisi_ke_text` varchar(50) DEFAULT NULL COMMENT 'penerima disposisi (jabatan)',
   `tanggal_dispoisi` date DEFAULT NULL COMMENT 'tanggal disposisi',
   `isi_disposisi` varchar(50) DEFAULT NULL COMMENT 'isi disposisi',
-  `created_by` int(30) DEFAULT NULL COMMENT 'Diinput Oleh: (by system)',
+  `created_by` varchar(50) DEFAULT NULL COMMENT 'Diinput Oleh: (by system)',
   `created_on` datetime DEFAULT NULL COMMENT 'Diinput Tanggal: (by system)',
   `modified_by` varchar(30) DEFAULT NULL COMMENT 'Diperbaharui oleh: (by system)',
   `modified_on` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
@@ -236,23 +235,27 @@ CREATE TABLE IF NOT EXISTS `surat_keluar` (
   `catatan_tambahan` varchar(100) DEFAULT NULL,
   `status_surat_id` int(11) DEFAULT NULL COMMENT 'mengacu pada id ref_tahapan_proses',
   `status_surat` varchar(50) DEFAULT NULL COMMENT 'mengacu pada nama ref_tahapan_proses',
-  `created_by` int(30) DEFAULT NULL COMMENT 'Diinput Oleh: (username)',
   `pembuat_surat_id` int(10) NOT NULL COMMENT '1:Panitera Muda Perdata, 2:Panitera Muda Pidana, 3:Panitera Muda Tipikor, 4:Panitera Mudah Hukum, 5:Kepegawaian, 6:Perencanaan, 7:Keuangan, 8:Umum;',
   `pembuat_surat_text` varchar(30) NOT NULL,
-  `created_on` int(11) DEFAULT NULL COMMENT 'Diinput Tanggal: (by system)',
+  `created_by` varchar(50) DEFAULT NULL COMMENT 'Diinput Oleh: (username)',
+  `created_on` datetime DEFAULT NULL COMMENT 'Diinput Tanggal: (by system)',
   `modified_by` varchar(30) DEFAULT NULL COMMENT 'Diperbaharui oleh: (username)',
   `modified_on` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
   PRIMARY KEY (`id_surat_keluar`),
   UNIQUE KEY `no_surat_keluar` (`no_surat_keluar`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
--- Dumping data for table remake_s03r4t.surat_keluar: ~3 rows (approximately)
+-- Dumping data for table remake_s03r4t.surat_keluar: ~7 rows (approximately)
 DELETE FROM `surat_keluar`;
 /*!40000 ALTER TABLE `surat_keluar` DISABLE KEYS */;
-INSERT INTO `surat_keluar` (`id_surat_keluar`, `no_surat_keluar`, `jenis_surat_keluar_id`, `tgl_surat`, `tujuan_id`, `tujuan_text`, `perihal`, `file`, `path_file`, `dikirim_via`, `no_resi_pengiriman`, `tanggal_pengiriman`, `catatan_tambahan`, `status_surat_id`, `status_surat`, `created_by`, `pembuat_surat_id`, `pembuat_surat_text`, `created_on`, `modified_by`, `modified_on`) VALUES
-	(2, 2, 1, '2222-02-02', 1, 'Internal', '2', '', _binary '', '1', '2', '0000-00-00', NULL, NULL, NULL, 1, 2, '22', 0, '1', '0000-00-00 00:00:00'),
-	(7, 1231, 1, '2017-01-01', 1, 'Internal', '2112', '', _binary '', '1', '21312312', '2018-10-01', NULL, NULL, 'Register', 1, 21, '211', 1494851280, '1', '0000-00-00 00:00:00'),
-	(8, 111, 1, '2019-01-01', 1, 'Internal', '2', '09221cddbb9a2913542c03c29f0a83b4.pdf', _binary '', '1', '2', '2019-01-01', NULL, 1, 'Register', 1, 2, '2', 1494856249, '1', '0000-00-00 00:00:00');
+INSERT INTO `surat_keluar` (`id_surat_keluar`, `no_surat_keluar`, `jenis_surat_keluar_id`, `tgl_surat`, `tujuan_id`, `tujuan_text`, `perihal`, `file`, `path_file`, `dikirim_via`, `no_resi_pengiriman`, `tanggal_pengiriman`, `catatan_tambahan`, `status_surat_id`, `status_surat`, `pembuat_surat_id`, `pembuat_surat_text`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
+	(2, 2, 1, '2222-02-02', 1, 'Internal', '2', '', _binary '', '1', '2', '0000-00-00', NULL, NULL, NULL, 2, '22', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
+	(7, 1231, 1, '2017-01-01', 1, 'Internal', '2112', '', _binary '', '1', '21312312', '2018-10-01', NULL, NULL, 'Register', 21, '211', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
+	(8, 111, 1, '2019-01-01', 1, 'Internal', '2', '09221cddbb9a2913542c03c29f0a83b4.pdf', _binary '', '1', '2', '2019-01-01', NULL, 1, 'Register', 2, '2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
+	(9, 1, 1, '2017-05-17', 1, 'Internal', '123', 'b55259a42d718cb5fae6d7e01367de60.pdf', _binary '', '1', '123', '2017-05-17', NULL, 1, 'Register', 123, '123', 'administrator', '2017-05-17 14:49:24', 'administrator', '2017-05-17 14:51:55'),
+	(10, 1222, 1, '2017-05-17', 1, 'Internal', '2131', '', _binary '', '1', '1231', '2017-05-17', NULL, 1, 'Register', 1231, '12312', 'administrator', '2017-05-17 18:23:21', 'administrator', '2017-05-17 20:04:42'),
+	(11, 12312, 1, '2017-05-17', 1, 'Internal', '131', '', _binary '', '1', '12312', '2017-05-17', NULL, 1, 'Register', 13, '1231', 'administrator', '2017-05-17 19:55:03', NULL, NULL),
+	(15, 1231322, 1, '2017-05-17', 1, 'Internal', '12313', '', _binary '', '1', '2311', '2017-05-17', NULL, 1, 'Register', 1, 'administrator', 'administrator', '2017-05-17 20:04:24', NULL, NULL);
 /*!40000 ALTER TABLE `surat_keluar` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_masuk
@@ -271,18 +274,20 @@ CREATE TABLE IF NOT EXISTS `surat_masuk` (
   `disposisi_terakhir_text` varchar(50) DEFAULT NULL COMMENT 'mengacu pada table disposisi field dipsoisi terakhir',
   `disposisi_tujuan_id` int(10) DEFAULT NULL COMMENT 'mengacu pada bagian_id pada table eselon IV',
   `catatan_tambahan` varchar(100) DEFAULT NULL,
-  `created_by` int(30) DEFAULT NULL COMMENT 'Diinput Oleh: (by system)',
   `created_on` datetime DEFAULT NULL COMMENT 'Diinput Tanggal: (by system)',
+  `created_by` varchar(50) DEFAULT NULL COMMENT 'Diinput Oleh: (by system)',
   `modified_by` varchar(30) DEFAULT NULL COMMENT 'Diperbaharui oleh: (by system)',
   `modified_on` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
-  PRIMARY KEY (`id_surat_masuk`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id_surat_masuk`),
+  UNIQUE KEY `no_lembar_disposisi` (`no_lembar_disposisi`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- Dumping data for table remake_s03r4t.surat_masuk: ~1 rows (approximately)
+-- Dumping data for table remake_s03r4t.surat_masuk: ~2 rows (approximately)
 DELETE FROM `surat_masuk`;
 /*!40000 ALTER TABLE `surat_masuk` DISABLE KEYS */;
-INSERT INTO `surat_masuk` (`id_surat_masuk`, `no_lembar_disposisi`, `tgl_masuk`, `tujuan_id`, `tujuan_text`, `pengirim`, `perihal`, `file`, `status_id`, `status_text`, `disposisi_terakhir_text`, `disposisi_tujuan_id`, `catatan_tambahan`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
-	(17, 1, '2017-10-10', 1, 'Utama', '121', '1', '', 1, 'Register', NULL, 7, ' 1', 1, '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00');
+INSERT INTO `surat_masuk` (`id_surat_masuk`, `no_lembar_disposisi`, `tgl_masuk`, `tujuan_id`, `tujuan_text`, `pengirim`, `perihal`, `file`, `status_id`, `status_text`, `disposisi_terakhir_text`, `disposisi_tujuan_id`, `catatan_tambahan`, `created_on`, `created_by`, `modified_by`, `modified_on`) VALUES
+	(17, 1, '2017-10-10', 1, 'Utama', '121', '1', '', 1, 'Register', NULL, 7, ' 1', '0000-00-00 00:00:00', '1', '1', '0000-00-00 00:00:00'),
+	(18, 2555, '2016-08-30', 1, 'Utama', 'PT. PEKANBARU', 'Pembentukan Tim Auditor Internal Perjamninan Mutu ', '', 2, 'Disposisi Tahap 1', NULL, 7, ' 23423', '2017-05-17 14:41:55', 'administrator', 'administrator', '2017-05-18 22:32:52');
 /*!40000 ALTER TABLE `surat_masuk` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_proses
@@ -298,9 +303,9 @@ CREATE TABLE IF NOT EXISTS `surat_proses` (
   `keterangan` varchar(500) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Keterangan: (by system)',
   `urutan` int(11) unsigned NOT NULL COMMENT 'Urutan proses(by system)',
   `diinput_oleh` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Diinput Oleh: (by system)',
-  `diinput_tanggal` int(11) DEFAULT NULL COMMENT 'Diinput Tanggal: (by system)',
+  `diinput_tanggal` datetime DEFAULT NULL COMMENT 'Diinput Tanggal: (by system)',
   `diperbaharui_oleh` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Diperbaharui Oleh: (by system)',
-  `diperbaharui_tanggal` int(11) DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
+  `diperbaharui_tanggal` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Data Riwayat Proses Perkara(generate by system)';
 
@@ -620,16 +625,18 @@ CREATE TABLE IF NOT EXISTS `sys_users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 AVG_ROW_LENGTH=372 COMMENT='Data User';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 AVG_ROW_LENGTH=372 COMMENT='Data User';
 
--- Dumping data for table remake_s03r4t.sys_users: ~4 rows (approximately)
+-- Dumping data for table remake_s03r4t.sys_users: ~6 rows (approximately)
 DELETE FROM `sys_users`;
 /*!40000 ALTER TABLE `sys_users` DISABLE KEYS */;
 INSERT INTO `sys_users` (`id`, `ip_address`, `fullname`, `username`, `password`, `salt`, `old_password`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `active`, `first_name`, `last_name`, `company`, `phone`, `alternative_email`, `allow_concurrent_login`, `has_change_password`, `enable_change_password`, `last_change_password`, `password_expired_remainder`, `attemp_count`, `attemp_time`, `user_expired`, `last_login`, `block`, `code_activation`, `params`, `lock_by`, `lock_on`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
-	(1, '127.0.0.1', 'Admin', 'administrator', '$2y$08$jwvhmNn2DujUarnTmEU6yO9/AoZ9UWjNvVXl125pfczpo9qEmvkL6', '', '', 'admin@admin.com', '', NULL, NULL, 'mIJgjwdK1.q/AlDojhepte', 1, 'Admin', 'istrator', 'ADMIN', '0', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1494978317, 0, NULL, '', '', NULL, NULL, 1268889823, NULL, NULL),
-	(2, '::1', 'Ketua', 'ketua', '$2y$08$2Jqoc2LfNeT/zhECQqfJHeCHiToZQU0gjErtqfTPurGON9gEP4KMS', '', '', 'asdf@adfasd.com', NULL, '', NULL, NULL, 1, 'Ketua', 'Wakil', '21', 'saf', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1494929907, 0, NULL, '', '', NULL, NULL, 1494502784, NULL, NULL),
+	(1, '127.0.0.1', 'Admin', 'administrator', '$2y$08$jwvhmNn2DujUarnTmEU6yO9/AoZ9UWjNvVXl125pfczpo9qEmvkL6', '', '', 'admin@admin.com', '', NULL, NULL, 'mIJgjwdK1.q/AlDojhepte', 1, 'Admin', 'istrator', 'ADMIN', '0', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495123817, 0, NULL, '', '', NULL, NULL, 1268889823, NULL, NULL),
+	(2, '::1', 'Ketua', 'ketua', '$2y$08$2Jqoc2LfNeT/zhECQqfJHeCHiToZQU0gjErtqfTPurGON9gEP4KMS', '', '', 'asdf@adfasd.com', NULL, '', NULL, NULL, 1, 'Ketua', 'Wakil', '21', 'saf', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495123042, 0, NULL, '', '', NULL, NULL, 1494502784, NULL, NULL),
 	(4, '::1', 'Sekretaris', 'sekretaris', '$2y$08$ynW/tsgzgx24qz01N6Uy5.1Eh0c/e6KA4VJVG8jb0fNf2zTjMUWMO', '', '', 'sekretaris@gmail.com', '', '', NULL, NULL, 1, 'Sekretaris', 'Tarisss', 'mewmew', '0000', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, NULL, 0, NULL, '', '', NULL, NULL, 1494925841, NULL, NULL),
-	(5, '::1', 'Umum', 'umum', '$2y$08$A2728dTO1qIWmpZbf1a.JOSOV.7Pca0sc/ehacZjuVFLlTl7dgStO', '', '', 'uu@gmail.com', '', '', NULL, NULL, 1, 'kabag', 'Umum', 'uuum', '00', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1494938908, 0, NULL, '', '', NULL, NULL, 1494925886, NULL, NULL);
+	(5, '::1', 'Umum', 'umum', '$2y$08$m/zeWtB.VfUefg.4FxeIDOS3MiKSXLZ0hZLlgqCRsQArngq7f7i56', '', '', 'uu@gmail.com', '', '', NULL, NULL, 2, 'kabag', 'Umum', 'uuum', '123123', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495031183, 0, NULL, '', '', NULL, NULL, 1494925886, NULL, NULL),
+	(6, '::1', 'msdfs', 'cicak', '$2y$08$r0zmGPkWJBigYzfrIvBMA.fYWGoACFQk/qsTwuH662Vx7gCI03THy', '', '', 'ads@asd.com', '', '', NULL, NULL, 1, '', '', '', '0000', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, NULL, 0, NULL, '', '', NULL, NULL, 1495026737, NULL, NULL),
+	(7, '::1', '1231', '123121', '$2y$08$u.8BxLIbCGqU5Hc/u8zXU.ZbG3iT/hwS0IyVYW4Vv8ue.XHiigkFm', '', '', '1231@dss.com', '', '', NULL, NULL, 1, '', '', '', '12312', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, NULL, 0, NULL, '', '', NULL, NULL, 1495028956, NULL, NULL);
 /*!40000 ALTER TABLE `sys_users` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_user_group
@@ -644,17 +651,18 @@ CREATE TABLE IF NOT EXISTS `sys_user_group` (
   KEY `userid` (`userid`),
   CONSTRAINT `FK_sys_user_group_sys_groups` FOREIGN KEY (`groupid`) REFERENCES `sys_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_sys_user_group_sys_users` FOREIGN KEY (`userid`) REFERENCES `sys_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1 COMMENT='Data Hubungan User Dengan Grup';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1 COMMENT='Data Hubungan User Dengan Grup';
 
--- Dumping data for table remake_s03r4t.sys_user_group: ~5 rows (approximately)
+-- Dumping data for table remake_s03r4t.sys_user_group: ~6 rows (approximately)
 DELETE FROM `sys_user_group`;
 /*!40000 ALTER TABLE `sys_user_group` DISABLE KEYS */;
 INSERT INTO `sys_user_group` (`id`, `userid`, `groupid`) VALUES
 	(23, 1, 2),
 	(12, 2, 10),
 	(17, 4, 40),
-	(24, 5, 30),
-	(21, 5, 60);
+	(43, 5, 60),
+	(25, 6, 2),
+	(26, 7, 2);
 /*!40000 ALTER TABLE `sys_user_group` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_user_online

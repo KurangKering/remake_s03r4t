@@ -8,7 +8,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nomor_arsip">No. Arsip
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input value="<?php set_value('nomor_arsip'); ?>" id="nomor_arsip" class="form-control" name="nomor_arsip"  required="required" type="text">
+              <input value="<?php echo set_value('nomor_arsip'); ?>" id="nomor_arsip" class="form-control" name="nomor_arsip"  required="required" type="text">
             </div>
           </div>
           <div class="form-group">
@@ -16,9 +16,9 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input 
-              pattern="\d{1,2}/\d{1,2}/\d{4}"
-              placeholder="dd/mm/YYYY" 
-              value="<?php set_value('tanggal_masuk_arsip'); ?>" 
+         
+              placeholder="<?php echo date("d-m-Y")?>" 
+              value="<?php echo (set_value('tanggal_masuk_arsip')) ? set_value('tanggal_masuk_arsip') : date("Y-m-d") ?>" 
               id="tanggal_masuk_arsip"  
               class="form-control" 
               name="tanggal_masuk_arsip"  
@@ -78,7 +78,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nama_penyerah">Nama Penyerah
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input  value="<?php set_value('nama_penyerah'); ?>" id="nama_penyerah" name="nama_penyerah"  class="form-control" required="required" type="text">
+              <input  value="<?php echo set_value('nama_penyerah'); ?>" id="nama_penyerah" name="nama_penyerah"  class="form-control" required="required" type="text">
             </div>
           </div>
           <div class="form-group">

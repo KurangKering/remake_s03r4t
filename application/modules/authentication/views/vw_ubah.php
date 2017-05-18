@@ -9,7 +9,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Username
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input value="<?php echo set_value('username') ? set_value('username') : $user['username']; ?>" id="username" class="form-control" name="username"  required="required" type="text">
+              <input value="<?php echo $user['username']; ?>" id="username" class="form-control" name="username"  disabled type="text">
             </div>
           </div>
 
@@ -67,48 +67,7 @@
               <input data-parsley-equalto="#password" value="" id="password_conf"  placeholder="Kosongkan jika tidak ingin merubah password" class="form-control" name="password_conf"   type="password">
             </div>
           </div>
-          <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-1">
-              <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                  <h5>Groups</h5>
-                  <div class="ibox-tools">
-                    <a class="collapse-link">
-                      <i class="fa fa-chevron-up"></i>
-                    </a>
-
-                  </div>
-                </div>
-                <div class="ibox-content">
-                  <div>
-                    <div>
-                    </div>
-                    <?php foreach ($groups as $group):?>
-                        <?php
-                        $gID=$group['id'];
-                        $checked = null;
-                        $item = null;
-                        foreach($currentGroups as $grp) {
-                          if ($gID == $grp->id) {
-                            $checked= ' checked="checked"';
-                            break;
-                          }
-                        }
-                        ?>
-                        <div class="col-md-6">
-                          <label class="checkbox">
-                            <input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked;?>>
-                            <?php echo htmlspecialchars($group['name'],ENT_QUOTES,'UTF-8');?>
-                          </label>
-                        </div>
-                    <?php endforeach?>
-
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+          
           <br>
           <div class="ln_solid"></div>
           <div class="form-group">

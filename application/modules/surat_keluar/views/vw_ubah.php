@@ -16,14 +16,12 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input  
-              pattern="\d{1,2}/\d{1,2}/\d{4}"
-              placeholder="dd/mm/YYYY" 
-              value="<?php echo date_converter($surat_keluar['tgl_surat']); ?>" 
+              value="<?php echo set_value('tgl_surat') ?  set_value('tgl_surat') : $surat_keluar['tgl_surat']; ?>" 
               id="tgl_surat"  
               class="form-control col-md-7 col-xs-12" 
               name="tgl_surat"  
               required="required" 
-              type="text">
+              type="date">
             </div>
           </div>
           <div class="form-group">
@@ -99,14 +97,12 @@
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input  
-            pattern="\d{1,2}/\d{1,2}/\d{4}"
-            placeholder="dd/mm/YYYY"  
-            value="<?php echo date_converter($surat_keluar['tanggal_pengiriman']); ?>" 
+            value="<?php echo set_value('tanggal_pengiriman') ? set_value('tanggal_pengiriman') : ($surat_keluar['tanggal_pengiriman']); ?>" 
             id="tanggal_pengiriman" 
             class="form-control col-md-7 col-xs-12" 
             name="tanggal_pengiriman"  
             required="required" 
-            type="text">
+            type="date">
           </div>
         </div>
 
@@ -115,7 +111,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="path_file">Path File
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input  value="<?php set_value('path_file'); ?>" id="path_file" class="form-control col-md-7 col-xs-12" name="path_file"  type="text">
+            <input  value="<?php echo set_value('path_file'); ?>" id="path_file" class="form-control col-md-7 col-xs-12" name="path_file"  type="text">
           </div>
         </div>
         <div class="form-group">

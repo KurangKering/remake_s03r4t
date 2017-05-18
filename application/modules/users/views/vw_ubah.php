@@ -113,7 +113,7 @@
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-4 col-md-offset-4">
-              <a href="<?php echo base_url('manage/users/lihat') ?>" class="btn btn-primary">Cancel</a>
+              <a href="<?php echo base_url('users/lihat') ?>" class="btn btn-primary">Cancel</a>
               <button class="btn btn-primary" type="reset">Reset</button>
               <button id="send" type="submit" class="btn btn-success">Submit</button>
             </div>

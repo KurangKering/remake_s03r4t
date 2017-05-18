@@ -64,7 +64,7 @@ class Md_Surat_masuk extends CI_Model {
 		return $this->db->query($sql)->result_array();
 	} 
 
-	public function json_select()
+	public function json_select_admin()
 	{
 		$this->datatables->select('
 			id_surat_masuk, 
@@ -79,15 +79,21 @@ class Md_Surat_masuk extends CI_Model {
 		->join('ref_tahapan_proses', 'surat_masuk.status_id = ref_tahapan_proses.id')
 		->add_column('nomor_urut', '0')
 		->add_column(
+			'detail_perihal',
+			'<a href="#" onClick="showDetails($1)">$2</a>',
+			'id_surat_masuk,perihal'
+			)
+		->add_column(
 			'view', 
-			'<button 
+			'
+			<button 
 			class="btn btn-default btn-md" 
-			onClick="showDetails($1)" 
+			onClick="loadAnoterPage($1)" 
 			id="detail" 
 			data-tooltip="tooltip" 
 			data-placement="left" 
-			title="Detail">
-			<i class="fa fa-info" aria-hidden="true"></i></button>
+			title="Cetak Disposisi">
+			<i class="fa fa-print" aria-hidden="true"></i></button>
 
 			<a href="'. base_url('surat_masuk/') .'ubah/$1" 
 			class="btn btn-default btn-md"
@@ -100,7 +106,55 @@ class Md_Surat_masuk extends CI_Model {
 			data-href="surat_masuk/hapus/$1"  
 			data-toggle="modal" 
 			data-target="#confirm-delete"
+			title="Hapus Data"
 			><i class="fa fa-trash" aria-hidden="true"></i></button>', 
+			'id_surat_masuk');
+		return $this->datatables->generate();
+
+		/*this is detail button*/
+		// <button 
+		// 	class="btn btn-default btn-md" 
+		// 	onClick="showDetails($1)" 
+		// 	id="detail" 
+		// 	data-tooltip="tooltip" 
+		// 	data-placement="left" 
+		// 	title="Detail">
+		// 	<i class="fa fa-info" aria-hidden="true"></i></button>
+	}
+
+
+	public function json_select_disposisi($status = null)
+	{
+		$this->datatables->select('
+			id_surat_masuk, 
+			no_lembar_disposisi, 
+			DATE_FORMAT(tgl_masuk, "%d/%m/%Y") as tgl_masuk, 
+			pengirim, 
+			perihal, 
+			tujuan_text, 
+			ref_tahapan_proses.nama as status_nama
+			')
+		->from('surat_masuk')
+		->join('ref_tahapan_proses', 'surat_masuk.status_id = ref_tahapan_proses.id')
+		->like('status_id', $status)
+		->add_column('nomor_urut', '0')
+		->add_column(
+			'detail_perihal',
+			'<a href="#" onClick="showDetails($1)">$2</a>',
+			'id_surat_masuk,perihal'
+			)
+		->add_column(
+			'view', 
+			'
+			<button 
+			class="btn btn-default btn-md" 
+			onClick="showDetails($1)" 
+			id="detail" 
+			data-tooltip="tooltip" 
+			data-placement="left" 
+			title="Detail">
+			Disposisi</button>
+			', 
 			'id_surat_masuk');
 
 		return $this->datatables->generate();

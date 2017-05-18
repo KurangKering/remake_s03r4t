@@ -41,7 +41,7 @@ class Arsip extends MY_Controller {
 		if ($this->form_validation->run() == TRUE) {
 
 			$container = array(
-				'tanggal_masuk_arsip' => date_converter($this->input->post('tanggal_masuk_arsip')),
+				'tanggal_masuk_arsip' => $this->input->post('tanggal_masuk_arsip'),
 				'no_ruang'            => $this->input->post('no_ruang'),
 				'no_lemari'           => $this->input->post('no_lemari'),
 				'no_rak'              => $this->input->post('no_rak'),
@@ -53,7 +53,7 @@ class Arsip extends MY_Controller {
 				'status'              => $this->input->post('status'),
 				'keterangan'          => $this->input->post('keterangan'),
 				'diinput_oleh'        => currentUser('username'),
-				'diinput_tanggal'     => time(),
+				'diinput_tanggal'     => date("Y-m-d H:i:s")
 				);
 
 			$res = $this->md_Global->insert_data('surat_arsip', $container);
@@ -96,7 +96,7 @@ class Arsip extends MY_Controller {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$container = array(
 				'id'				  => $this->input->post('id'),
-				'tanggal_masuk_arsip' => date_converter($this->input->post('tanggal_masuk_arsip')),
+				'tanggal_masuk_arsip' => $this->input->post('tanggal_masuk_arsip'),
 				'no_ruang'            => $this->input->post('no_ruang'),
 				'no_lemari'           => $this->input->post('no_lemari'),
 				'no_rak'              => $this->input->post('no_rak'),
@@ -108,7 +108,7 @@ class Arsip extends MY_Controller {
 				'status'              => $this->input->post('status'),
 				'keterangan'          => $this->input->post('keterangan'),
 				'diperbaharui_oleh'        => currentUser('username'),
-				'diperbaharui_tanggal'     => time(),
+				'diperbaharui_tanggal'     => date("Y-m-d H:i:s"),
 				);
 
 

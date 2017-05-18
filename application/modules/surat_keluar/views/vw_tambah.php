@@ -8,7 +8,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="no_surat_keluar">No. Surat Keluar
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input data-parsley-type="number" value="<?php set_value('no_surat_keluar'); ?>" id="no_surat_keluar" class="form-control col-md-7 col-xs-12" name="no_surat_keluar"  required="required" type="text">
+              <input data-parsley-type="number" value="<?php echo set_value('no_surat_keluar'); ?>" id="no_surat_keluar" class="form-control col-md-7 col-xs-12" name="no_surat_keluar"  required="required" type="text">
             </div>
           </div>
           <div class="form-group">
@@ -16,14 +16,12 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input  
-              pattern="\d{1,2}/\d{1,2}/\d{4}"
-              placeholder="dd/mm/YYYY" 
-              value="<?php set_value('tgl_surat'); ?>" 
+              value="<?php echo set_value('tgl_surat') ? set_value('tgl_surat') : date('Y-m-d'); ?>" 
               id="tgl_surat"  
               class="form-control col-md-7 col-xs-12" 
               name="tgl_surat"  
               required="required" 
-              type="text">
+              type="date">
             </div>
           </div>
           <div class="form-group">
@@ -52,25 +50,25 @@
              </div>
            </div>
          </div>
-         <div class="form-group">
+         <!-- <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pembuat_surat_id">ID Pembuat Surat
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input  value="<?php set_value('pembuat_surat_id'); ?>" id="pembuat_surat_id" name="pembuat_surat_id"  class="form-control col-md-7 col-xs-12" required="required" type="text">
+            <input  value="<?php echo set_value('pembuat_surat_id'); ?>" id="pembuat_surat_id" name="pembuat_surat_id"  class="form-control col-md-7 col-xs-12" required="required" type="text">
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pembuat_surat_text">Pembuat Surat
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input  value="<?php set_value('pembuat_surat_text'); ?>" id="pembuat_surat_text" name="pembuat_surat_text"  class="form-control col-md-7 col-xs-12" required="required" type="text">
+            <input  value="<?php echo set_value('pembuat_surat_text'); ?>" id="pembuat_surat_text" name="pembuat_surat_text"  class="form-control col-md-7 col-xs-12" required="required" type="text">
           </div>
-        </div>
+        </div> -->
         
         <div class="form-group">
           <label for="perihal" class="control-label col-md-3 col-sm-3 col-xs-12">Perihal</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input  value="<?php set_value('perihal'); ?>" id="perihal" name="perihal"  class="form-control col-md-7 col-xs-12"  required="required" type="text">
+            <input  value="<?php echo set_value('perihal'); ?>" id="perihal" name="perihal"  class="form-control col-md-7 col-xs-12"  required="required" type="text">
           </div>
         </div>
         <div class="form-group">
@@ -91,7 +89,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="no_resi_pengiriman">No Resi Pengiriman
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <input  value="<?php set_value('no_resi_pengiriman'); ?>" id="no_resi_pengiriman" class="form-control col-md-7 col-xs-12" name="no_resi_pengiriman"  required="required" type="text" data-parsley-type="number">
+            <input  value="<?php echo set_value('no_resi_pengiriman'); ?>" id="no_resi_pengiriman" class="form-control col-md-7 col-xs-12" name="no_resi_pengiriman"  required="required" type="text" data-parsley-type="number">
           </div>
         </div>
         <div class="form-group">
@@ -99,14 +97,12 @@
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <input  
-            pattern="\d{1,2}/\d{1,2}/\d{4}"
-            placeholder="dd/mm/YYYY"  
-            value="<?php set_value('tanggal_pengiriman'); ?>" 
+            value="<?php echo set_value('tanggal_pengiriman') ? set_value('tanggal_pengiriman') : date('Y-m-d'); ?>" 
             id="tanggal_pengiriman" 
             class="form-control col-md-7 col-xs-12" 
             name="tanggal_pengiriman"  
             required="required" 
-            type="text">
+            type="date">
           </div>
         </div>
 
@@ -115,7 +111,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="path_file">Path File
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-          <input  value="<?php set_value('path_file'); ?>" id="path_file" class="form-control col-md-7 col-xs-12" name="path_file"  type="text">
+          <input  value="<?php echo set_value('path_file'); ?>" id="path_file" class="form-control col-md-7 col-xs-12" name="path_file"  type="text">
           </div>
         </div>
         <div class="form-group">

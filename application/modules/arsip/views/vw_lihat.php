@@ -1,12 +1,7 @@
 <div class="row" >
   <div class="col-lg-12">
     <div class="ibox ">
-   <!--        <div class="ibox-title">
-            <h5>Drag&amp;Drop</h5>
-            <div class="ibox-tools">
-              <label class="label label-primary">You can drag and drop me to other box.</label>
-            </div>
-        </div> -->
+
         <div class="ibox-content">
           <table id="tbl_arsip" class="table table-striped">
             <thead>
@@ -106,19 +101,14 @@
             columns: [
             {"data" : "nomor_urut" ,
             "orderable": false},
-            {
-                "data": "nomor_arsip",
-
-            },
-
-
+            {"data": "nomor_arsip"},
             {"data": "tanggal_masuk_arsip"},
             {"data": "nama_ruang"},
             {"data": "no_lemari"},
             {"data": "no_rak"},
             {"data": "nama_box"},
             {"data": "status"},
-            {"data": "view"},
+            {"data": "view" , "orderable" : false},
             ],
             order: [[1, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
@@ -145,11 +135,11 @@
     });
         
 
-        /*add button tambah*/
-        $('<button id="tambah" class="btn btn-default">Tambah</button>').click(function(event) {
-            /* Act on the event */
-            location.href = '<?php echo base_url('arsip/tambah'); ?>'
-        }).appendTo('div.dataTables_filter');
+        // /*add button tambah*/
+        // $('<button id="tambah" class="btn btn-default">Tambah</button>').click(function(event) {
+        //      Act on the event 
+        //     location.href = '<?php echo base_url('arsip/tambah'); ?>'
+        // }).appendTo('div.dataTables_filter');
         /*show modal when deleting data*/
         $('#confirm-delete').on('show.bs.modal', function(e) {
             $(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id'));

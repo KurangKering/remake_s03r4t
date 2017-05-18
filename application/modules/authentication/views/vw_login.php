@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Login</title>
+    <title>SiSURaT| Login</title>
 
     <link href="<?php echo base_url('themes/inspinia/'); ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url('themes/inspinia/'); ?>font-awesome/css/font-awesome.css" rel="stylesheet">

@@ -16,9 +16,7 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input 
-              pattern="\d{1,2}/\d{1,2}/\d{4}"
-              placeholder="dd/mm/YYYY" 
-              value="<?php echo date_converter($arsip['tanggal_masuk_arsip']); ?>" 
+              value="<?php echo $arsip['tanggal_masuk_arsip']; ?>" 
               id="tanggal_masuk_arsip"  
               class="form-control" 
               name="tanggal_masuk_arsip"  

@@ -60,7 +60,7 @@ class Surat_keluar extends MY_Controller {
 			$container = array(
 				'no_surat_keluar'       => $this->input->post('no_surat_keluar'),
 				'jenis_surat_keluar_id' => $this->input->post('jenis_surat_keluar_id'),
-				'tgl_surat'             => date_converter($this->input->post('tgl_surat')),
+				'tgl_surat'             => $this->input->post('tgl_surat'),
 				'tujuan_id'             => $this->input->post('tujuan_id'),
 				'tujuan_text'           => $this->config->item('surat_keluar')['tujuan_id'][$this->input->post('tujuan_id')],
 				'perihal'               => $this->input->post('perihal'),
@@ -68,14 +68,14 @@ class Surat_keluar extends MY_Controller {
 				'path_file'             => $this->input->post('path_file'),
 				'dikirim_via'           => $this->input->post('dikirim_via'),
 				'no_resi_pengiriman'    => $this->input->post('no_resi_pengiriman'),
-				'tanggal_pengiriman'    => date_converter($this->input->post('tanggal_pengiriman')),
+				'tanggal_pengiriman'    => $this->input->post('tanggal_pengiriman'),
 				'catatan_tambahan'      => $this->input->post('catatan_tambahan'),
 				'status_surat_id'       => $status_id,
 				'status_surat'          => $tahapan_proses[$status_id],
-				'pembuat_surat_id'      => $this->input->post('pembuat_surat_id'),
-				'pembuat_surat_text'    => $this->input->post('pembuat_surat_text'),
-				'created_by'            => currentUser('id'),
-				'created_on'            => time()
+				'pembuat_surat_id'      => currentUser('id'),
+				'pembuat_surat_text'    => currentUser('username'),
+				'created_by'            => currentUser('username'),
+				'created_on'            => date("Y-m-d H:i:s")
 				);
 
 			$res = $this->md_Global->insert_data('surat_keluar', $container);
@@ -143,21 +143,21 @@ class Surat_keluar extends MY_Controller {
 				$container = array(
 					'no_surat_keluar'       => $this->input->post('no_surat_keluar'),
 					'jenis_surat_keluar_id' => $this->input->post('jenis_surat_keluar_id'),
-					'tgl_surat'             => date_converter($this->input->post('tgl_surat')),
+					'tgl_surat'             => $this->input->post('tgl_surat'),
 					'tujuan_id'             => $this->input->post('tujuan_id'),
 					'tujuan_text'           => $this->config->item('surat_keluar')['tujuan_id'][$this->input->post('tujuan_id')],
 					'perihal'               => $this->input->post('perihal'),
 					'path_file'             => $this->input->post('path_file'),
 					'dikirim_via'           => $this->input->post('dikirim_via'),
 					'no_resi_pengiriman'    => $this->input->post('no_resi_pengiriman'),
-					'tanggal_pengiriman'    => date_converter($this->input->post('tanggal_pengiriman')),
+					'tanggal_pengiriman'    => $this->input->post('tanggal_pengiriman'),
 					'catatan_tambahan'      => $this->input->post('catatan_tambahan'),
 					// 'status_surat_id'       => $status_id,
 					/*'status_surat'          => $tahapan_proses[$status_id],*/
-					'pembuat_surat_id'      => $this->input->post('pembuat_surat_id'),
-					'pembuat_surat_text'    => $this->input->post('pembuat_surat_text'),
-					'modified_by'         => currentUser('id'),
-					'modified_on'         => time()
+					// 'pembuat_surat_id'      => $this->input->post('pembuat_surat_id'),
+					// 'pembuat_surat_text'    => $this->input->post('pembuat_surat_text'),
+					'modified_by'         => currentUser('username'),
+					'modified_on'         => date("Y-m-d H:i:s")
 					);
 
 				$this->load->helper(array('form', 'url'));
@@ -237,7 +237,7 @@ class Surat_keluar extends MY_Controller {
 			$table 	  .= "<tr><td>Tanggal Masuk Surat</td><td>".$data['tgl_surat']."</td></tr>";	
 			$table 	  .= "<tr><td>Jenis Surat Keluar</td><td>".$this->config->item('surat_keluar')['jenis_surat_keluar'][$data['jenis_surat_keluar_id']]."</td></tr>";	
 			$table 	  .= "<tr><td>Ditujukan Kepada</td><td>".$data['tujuan_text']."</td></tr>";	
-			$table 	  .= "<tr><td>Pengirim Surat</td><td>".$data['pembuat_surat_text']."</td></tr>";	
+			$table 	  .= "<tr><td>Pembuat Surat</td><td>".$data['pembuat_surat_text']."</td></tr>";	
 			$table 	  .= "<tr><td>Perihal</td><td>".$data['perihal']."<td></tr>";	
 			$table 	  .= "<tr><td>Status</td><td>".$data['tahap_nama']."</td></tr>";	
 			$table 	  .= "<tr><td>Pengiriman Via</td><td>".$this->config->item('surat_keluar')['dikirim_via'][$data['dikirim_via']]."</td></tr>";	

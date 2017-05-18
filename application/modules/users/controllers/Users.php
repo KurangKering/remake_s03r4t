@@ -11,7 +11,7 @@ class Users extends MY_Controller {
 
 	public function index()
 	{
-		redirect('manage/users/lihat','refresh');
+		redirect('users/lihat','refresh');
 	}
 
 
@@ -96,7 +96,7 @@ class Users extends MY_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("manage/users/lihat", 'refresh');
+			redirect("users/lihat", 'refresh');
 		}
 
 		
@@ -105,7 +105,7 @@ class Users extends MY_Controller {
 	}
 
 
-	public function ubah($id == null)
+	public function ubah($id = null)
 	{
 		$this->template->title("Ubah | Users");
 		$this->template->append_metadata('<link href="'. base_url("themes/inspinia/css/plugins/iCheck/custom.css").'" rel="stylesheet">');
@@ -157,16 +157,16 @@ class Users extends MY_Controller {
 			$res = $this->ion_auth->update($data['user']['id'], $container);
 			if ($res) {
 				$this->session->set_flashdata('message', 'Berhasil merubah Data User');
-				redirect('manage/users/lihat','refresh');
+				redirect('users/lihat','refresh');
 			}
 
 			else if ($this->db->error()['code'] == 1062) {
 				$this->session->set_flashdata('message', 'Duplikat Terdeteksi');
-				redirect('manage/users/ubah/' . $id,'refresh');
+				redirect('users/ubah/' . $id,'refresh');
 			}
 			else {
 				$this->session->set_flashdata('message', 'Gagal Merubah User, Cek username / email' );
-				redirect('manage/users/ubah/' . $id,'refresh');
+				redirect('users/ubah/' . $id,'refresh');
 			}
 		}
 

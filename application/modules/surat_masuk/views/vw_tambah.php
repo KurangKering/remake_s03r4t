@@ -1,12 +1,6 @@
 <div class="row" >
   <div class="col-lg-12">
     <div class="ibox ">
-   <!--        <div class="ibox-title">
-            <h5>Drag&amp;Drop</h5>
-            <div class="ibox-tools">
-              <label class="label label-primary">You can drag and drop me to other box.</label>
-            </div>
-          </div> -->
           <div class="ibox-content">
             <form id="frm_tambah_surat_masuk" data-parsley-validate class="form-horizontal" method="POST"  enctype="multipart/form-data">
 
@@ -14,7 +8,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="no_lembar_disposisi">No. Lembar Disposisi
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php set_value('no_lembar_disposisi'); ?>" id="no_lembar_disposisi" class="form-control" name="no_lembar_disposisi"  required="required" data-parsley-type="number">
+                  <input value="<?php echo set_value('no_lembar_disposisi'); ?>" id="no_lembar_disposisi" class="form-control" name="no_lembar_disposisi"  required="required" data-parsley-type="number">
                 </div>
               </div>
               <div class="form-group">
@@ -22,9 +16,9 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <input 
-                  pattern="\d{1,2}/\d{1,2}/\d{4}"
+                  
                   placeholder="dd/mm/YYYY" 
-                  value="<?php set_value('tanggal_masuk'); ?>" 
+                  value="<?php echo set_value('tanggal_masuk') ? set_value('tanggal_masuk') : date('Y-m-d') ?>" 
                   id="tanggal_masuk"  
                   class="form-control" 
                   name="tanggal_masuk"  
@@ -49,14 +43,14 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pengirim">Pengirim
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input  value="<?php set_value('pengirim'); ?>" id="pengirim" name="pengirim"  class="form-control" required="required" type="text">
+                  <input  value="<?php echo set_value('pengirim'); ?>" id="pengirim" name="pengirim"  class="form-control" required="required" type="text">
                 </div>
               </div>
               
               <div class="form-group">
                 <label for="perihal" class="control-label col-md-3 col-sm-3 col-xs-12">Perihal</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input  value="<?php set_value('perihal'); ?>" id="perihal" name="perihal"  class="form-control"  required="required" type="text">
+                  <input  value="<?php echo set_value('perihal'); ?>" id="perihal" name="perihal"  class="form-control"  required="required" type="text">
                 </div>
               </div>
               <div class="form-group">

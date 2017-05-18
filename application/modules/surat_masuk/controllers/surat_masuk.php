@@ -10,13 +10,7 @@ class Surat_masuk extends MY_Controller {
 		$this->load->model('md_surat_masuk');
 	}
 
-	public function dummy()
-	{
-		$arr1 = array('1', '2', '5');
-		$arr2 = array('3', '4', '5', '7', '1');
-		$arr3 = array_intersect($arr1, $arr2);
-		debug($arr3);
-	}
+	
 	public function index()
 	{
 		redirect('surat_masuk/lihat','refresh');
@@ -68,7 +62,7 @@ class Surat_masuk extends MY_Controller {
 
 			$container = array(
 				'no_lembar_disposisi' => $this->input->post('no_lembar_disposisi'),
-				'tgl_masuk'           => date_converter($this->input->post('tanggal_masuk')),
+				'tgl_masuk'           => $this->input->post('tanggal_masuk'),
 				'tujuan_id'           => $this->input->post('tujuan_id'),
 				'tujuan_text'			=> $this->config->item('surat_masuk')['tujuan'][$this->input->post('tujuan_id')],
 				'pengirim'            => $this->input->post('pengirim'),
@@ -78,8 +72,8 @@ class Surat_masuk extends MY_Controller {
 				'status_text'           => $tahapan_proses[$status_id],
 				'disposisi_tujuan_id' => $this->input->post('disposisi_tujuan_id'),
 				'catatan_tambahan'    => $this->input->post('catatan_tambahan'),
-				'created_by'          => currentUser('id'),
-				'created_on'          => time()
+				'created_by'          => currentUser('username'),
+				'created_on'          => date("Y-m-d H:i:s")
 				);
 
 			$res = $this->md_Global->insert_data('surat_masuk', $container);
@@ -144,15 +138,15 @@ class Surat_masuk extends MY_Controller {
 
 				$container = array(
 					'no_lembar_disposisi' => $this->input->post('no_lembar_disposisi'),
-					'tgl_masuk'           => date_converter($this->input->post('tanggal_masuk')),
+					'tgl_masuk'           => $this->input->post('tanggal_masuk'),
 					'tujuan_id'           => $this->input->post('tujuan_id'),
 					'tujuan_text'         => $this->config->item('surat_masuk')['tujuan'][$this->input->post('tujuan_id')],
 					'pengirim'            => $this->input->post('pengirim'),
 					'perihal'             => $this->input->post('perihal'),
 					'disposisi_tujuan_id' => $this->input->post('disposisi_tujuan_id'),
 					'catatan_tambahan'    => $this->input->post('catatan_tambahan'),
-					'modified_by'         => currentUser('id'),
-					'modified_on'         => time()
+					'modified_by'         => currentUser('username'),
+					'modified_on'         => date("Y-m-d H:i:s")
 					);
 
 				$this->load->helper(array('form', 'url'));
@@ -208,7 +202,23 @@ class Surat_masuk extends MY_Controller {
 
 	public function ajax_lihat()
 	{
-		$var = $this->md_surat_masuk->json_select();
+
+		if ($this->ion_auth->in_group(2, currentUser('id'))) {
+			$var = $this->md_surat_masuk->json_select_admin();
+		}
+		else if ($this->ion_auth->in_group(10, currentUser('id'))) {
+
+			$var = $this->md_surat_masuk->json_select_disposisi(2);
+		}
+		else if ($this->ion_auth->in_group(array(30,40), currentUser('id'))) {
+
+			$var = $this->md_surat_masuk->json_select_disposisi(3);
+		}
+		else if ($this->ion_auth->in_group(array(50,60), currentUser('id'))) {
+
+			$var = $this->md_surat_masuk->json_select_disposisi(4);
+		}
+	
 		echo $var;
 	}
 
@@ -222,7 +232,7 @@ class Surat_masuk extends MY_Controller {
 			$table     = '<h4>Surat Masuk</h4><br/>';
 			$table    .= '<table class="table table-condensed table-striped">';
 			$table 	  .= "<tr><td>Nomor Lembar Disposisi</td><td>".$data['no_lembar_disposisi']."</td></tr>";	
-			$table 	  .= "<tr><td>Tanggal Masuk</td><td>".$data['tgl_masuk']."</td></tr>";	
+			$table 	  .= "<tr><td>Tanggal Masuk</td><td>".date_converter($data['tgl_masuk'])."</td></tr>";	
 			$table 	  .= "<tr><td>Ditujukan Kepada</td><td>".$data['tujuan_text']."</td></tr>";	
 			$table 	  .= "<tr><td>Pengirim Surat</td><td>".$data['pengirim']."</td></tr>";	
 			$table 	  .= "<tr><td>Perihal</td><td>".$data['perihal']."</td></tr>";	

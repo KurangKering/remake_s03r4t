@@ -79,17 +79,14 @@ class Md_surat_keluar extends CI_Model {
 			')
 		->from('surat_keluar')
 		->join('ref_tahapan_proses', 'surat_keluar.status_surat_id = ref_tahapan_proses.id')
+		->add_column(
+			'detail_perihal',
+			'<a href="#" onClick="showDetails($1)">$2</a>',
+			'id_surat_keluar,perihal'
+			)
 		->add_column('nomor_urut', '0')
 		->add_column('view', 
-			'<button class="btn btn-default btn-md"  
-			onClick="showDetails($1)" 
-			id="detail" 
-			data-tooltip="tooltip" 
-			data-placement="left" 
-			title="Detail">
-			<i class="fa fa-info" aria-hidden="true"></i></button>
-
-			<a href="'. base_url('surat_keluar/') .'ubah/$1" 
+			'<a href="'. base_url('surat_keluar/') .'ubah/$1" 
 			class="btn btn-default btn-md"
 			title="Ubah">
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -102,6 +99,14 @@ class Md_surat_keluar extends CI_Model {
 			data-target="#confirm_delete_keluar"><i class="fa fa-trash" aria-hidden="true"></i></button>', 
 			'id_surat_keluar');
 		return $this->datatables->generate();
+
+		// <button class="btn btn-default btn-md"  
+		// 	onClick="showDetails($1)" 
+		// 	id="detail" 
+		// 	data-tooltip="tooltip" 
+		// 	data-placement="left" 
+		// 	title="Detail">
+		// 	<i class="fa fa-info" aria-hidden="true"></i></button>
 
 	}
 

@@ -121,11 +121,11 @@
     });
         
 
-        /*add button tambah*/
-        $('<button id="tambah" class="btn btn-default">Tambah</button>').click(function(event) {
-            /* Act on the event */
-            location.href = '<?php echo base_url('manage/users/tambah'); ?>'
-        }).appendTo('div.dataTables_filter');
+        // /*add button tambah*/
+        // $('<button id="tambah" class="btn btn-default">Tambah</button>').click(function(event) {
+        //      Act on the event 
+        //     location.href = '<?php echo base_url('manage/users/tambah'); ?>'
+        // }).appendTo('div.dataTables_filter');
         /*show modal when deleting data*/
         $('#confirm-delete').on('show.bs.modal', function(e) {
             $(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id'));

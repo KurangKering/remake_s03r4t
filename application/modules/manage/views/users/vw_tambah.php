@@ -9,7 +9,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Username
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input value="<?php set_value('username'); ?>" id="username" class="form-control" name="username"  required="required" type="text">
+              <input value="<?php echo set_value('username'); ?>" id="username" class="form-control" name="username"  required="required" type="text">
             </div>
           </div>
 
@@ -17,7 +17,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fullname">Nama Lengkap
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input value="<?php set_value('fullname'); ?>" id="fullname" class="form-control" name="fullname"  required="required" type="text">
+              <input value="<?php echo set_value('fullname'); ?>" id="fullname" class="form-control" name="fullname"  required="required" type="text">
             </div>
           </div>
 
@@ -25,7 +25,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-            <input value="<?php set_value('email'); ?>" id="email" class="form-control" name="email"  required="required" type="email">
+            <input value="<?php echo set_value('email'); ?>" id="email" class="form-control" name="email"  required="required" type="email">
             </div>
           </div>
 
@@ -33,7 +33,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Nomor HP
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input value="<?php set_value('phone'); ?>" id="phone" class="form-control" name="phone"  required="required" type="text">
+              <input value="<?php echo set_value('phone'); ?>" id="phone" class="form-control" name="phone"  required="required" type="text">
             </div>
           </div>
 
@@ -56,7 +56,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input value="<?php set_value('password'); ?>" id="password" class="form-control" name="password"  required="required" type="password">
+              <input value="<?php echo set_value('password'); ?>" id="password" class="form-control" name="password"  required="required" type="password">
             </div>
           </div>
 
@@ -64,7 +64,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password_conf">Password Confirmation
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input data-parsley-equalto="#password" value="<?php set_value('password_conf'); ?>" id="password_conf" class="form-control" name="password_conf"  required="required" type="password">
+              <input data-parsley-equalto="#password" value="<?php echo set_value('password_conf'); ?>" id="password_conf" class="form-control" name="password_conf"  required="required" type="password">
             </div>
           </div>
           <div class="form-group">

@@ -126,17 +126,15 @@
         columns: [
         {"data" : "nomor_urut" ,
         "orderable": false},
-        {
-          "data": "no_surat_keluar",
-        },
+        {"data": "no_surat_keluar"},
         {"data": "tgl_surat"},
         {"data": "pembuat_surat_text"},
-        {"data": "perihal"},
+        {"data": "detail_perihal", "orderable" : false},
         {"data": "tujuan_text"},
         {"data": "nama"},
-        {"data": "view"},
+        {"data": "view", "orderable" : false},
         ],
-        order: [[1, 'desc']],
+        order: [[2, 'desc']],
         rowCallback: function(row, data, iDisplayIndex) {
           var info = this.fnPagingInfo();
           var page = info.iPage;
@@ -146,11 +144,11 @@
           if(row.cells[7]) row.cells[7].noWrap = true;
         }
       });
-      /*add button tambah*/
-      $('<button id="tambah" class="btn btn-default">Tambah</button>').click(function(event) {
-        /* Act on the event */
-        location.href = '<?php echo base_url('surat_keluar/tambah'); ?>'
-      }).appendTo('div.dataTables_filter');
+      // /*add button tambah*/
+      // $('<button id="tambah" class="btn btn-default">Tambah</button>').click(function(event) {
+      //    Act on the event 
+      //   location.href = '<?php echo base_url('surat_keluar/tambah'); ?>'
+      // }).appendTo('div.dataTables_filter');
 
       $('#confirm_delete_keluar').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id_surat_keluar'));

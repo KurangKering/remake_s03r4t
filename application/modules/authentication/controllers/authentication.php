@@ -84,10 +84,6 @@ class Authentication extends CI_Controller {
 		redirect('login', 'refresh');
 	}
 
-	public function profile()
-	{
-		
-	}
 
 }
 
