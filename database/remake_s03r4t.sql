@@ -13,10 +13,12 @@
 
 
 -- Dumping database structure for remake_s03r4t
+DROP DATABASE IF EXISTS `remake_s03r4t`;
 CREATE DATABASE IF NOT EXISTS `remake_s03r4t` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `remake_s03r4t`;
 
 -- Dumping structure for table remake_s03r4t.groups
+DROP TABLE IF EXISTS `groups`;
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -33,6 +35,7 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.login_attempts
+DROP TABLE IF EXISTS `login_attempts`;
 CREATE TABLE IF NOT EXISTS `login_attempts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(15) NOT NULL,
@@ -47,6 +50,7 @@ DELETE FROM `login_attempts`;
 /*!40000 ALTER TABLE `login_attempts` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.menus
+DROP TABLE IF EXISTS `menus`;
 CREATE TABLE IF NOT EXISTS `menus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent` int(11) DEFAULT NULL,
@@ -65,11 +69,11 @@ DELETE FROM `menus`;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
 INSERT INTO `menus` (`id`, `parent`, `name`, `icon`, `slug`, `number`, `access`) VALUES
 	(1, NULL, 'Dashboard', 'fa fa-home', 'Dashboard', 1, '0'),
-	(2, NULL, 'Surat Masuk', 'fa fa-envelope', 'surat_masuk', 2, '2,10,30,40'),
+	(2, NULL, 'Surat Masuk', 'fa fa-envelope', 'surat_masuk', 2, '2,10,30,40,50,60'),
 	(3, NULL, 'Surat Keluar', 'fa fa-envelope-o', 'surat_keluar', 3, '2,10,30,40,50,60,70,80,90,100'),
-	(4, NULL, 'Arsip', 'fa fa-book', 'arsip', 4, '0,70,80,90,100'),
+	(4, NULL, 'Arsip', 'fa fa-book', 'arsip', 4, '70,80,90,100'),
 	(6, NULL, 'Manage', 'fa fa-group', 'users', 6, '2'),
-	(14, 2, 'Data Surat Masuk', '', 'surat_masuk/lihat', 1, '2,10,30,40'),
+	(14, 2, 'Data Surat Masuk', '', 'surat_masuk/lihat', 1, '2,10,30,40,50,60'),
 	(15, 2, 'Tambah Surat Masuk', '', 'surat_masuk/tambah', 2, '2'),
 	(16, 3, 'Data Surat Keluar', '', 'surat_keluar/lihat', 1, '2,10,30,40,50,60,70,80,90,100,110,120,130,140'),
 	(17, 3, 'Tambah Surat Keluar', '', 'surat_keluar/tambah', 2, '2,70,80,90,100,110,120,130,140'),
@@ -81,6 +85,7 @@ INSERT INTO `menus` (`id`, `parent`, `name`, `icon`, `slug`, `number`, `access`)
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.ref_eselon
+DROP TABLE IF EXISTS `ref_eselon`;
 CREATE TABLE IF NOT EXISTS `ref_eselon` (
   `id` int(11) unsigned NOT NULL COMMENT 'Primary key (by system)',
   `kode` varchar(10) DEFAULT NULL COMMENT 'Kode Tahapan: isian bebas',
@@ -120,6 +125,7 @@ INSERT INTO `ref_eselon` (`id`, `kode`, `nama`, `keterangan`, `urutan`, `aktif`,
 /*!40000 ALTER TABLE `ref_eselon` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.ref_tahapan_proses
+DROP TABLE IF EXISTS `ref_tahapan_proses`;
 CREATE TABLE IF NOT EXISTS `ref_tahapan_proses` (
   `Id` int(11) unsigned NOT NULL COMMENT 'Primary key (by system)',
   `kode` varchar(10) DEFAULT NULL COMMENT 'Kode Tahapan: isian bebas',
@@ -153,6 +159,7 @@ INSERT INTO `ref_tahapan_proses` (`Id`, `kode`, `nama`, `keterangan`, `urutan`, 
 /*!40000 ALTER TABLE `ref_tahapan_proses` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_arsip
+DROP TABLE IF EXISTS `surat_arsip`;
 CREATE TABLE IF NOT EXISTS `surat_arsip` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `no_ruang` tinyint(4) DEFAULT NULL,
@@ -178,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `surat_arsip` (
   CONSTRAINT `FK_surat_arsip_sys_users` FOREIGN KEY (`nama_penerima`) REFERENCES `sys_users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table remake_s03r4t.surat_arsip: ~2 rows (approximately)
+-- Dumping data for table remake_s03r4t.surat_arsip: ~3 rows (approximately)
 DELETE FROM `surat_arsip`;
 /*!40000 ALTER TABLE `surat_arsip` DISABLE KEYS */;
 INSERT INTO `surat_arsip` (`id`, `no_ruang`, `no_lemari`, `no_rak`, `no_berkas`, `nomor_arsip`, `tanggal_masuk_arsip`, `nama_penerima`, `nama_penyerah`, `lengkap`, `status`, `keterangan`, `diinput_oleh`, `diinput_tanggal`, `diperbaharui_oleh`, `diperbaharui_tanggal`) VALUES
@@ -186,8 +193,9 @@ INSERT INTO `surat_arsip` (`id`, `no_ruang`, `no_lemari`, `no_rak`, `no_berkas`,
 	(10, 1, 1, 1, 1, '1231231212', '2017-05-17', 1, 'qweq', 'Y', 1, ' ', 'administrator', '2017-05-17 14:29:23', '0000-00-00 00:00:00', '2017-05-17 14:36:36');
 /*!40000 ALTER TABLE `surat_arsip` ENABLE KEYS */;
 
--- Dumping structure for table remake_s03r4t.surat_dispoisi
-CREATE TABLE IF NOT EXISTS `surat_dispoisi` (
+-- Dumping structure for table remake_s03r4t.surat_disposisi
+DROP TABLE IF EXISTS `surat_disposisi`;
+CREATE TABLE IF NOT EXISTS `surat_disposisi` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id table disposisi',
   `id_surat_masuk` int(10) NOT NULL COMMENT 'mengacu pada table surat masuk id_surat_masuk',
   `tahapan_disposisi` int(10) DEFAULT NULL COMMENT '1:ketua/wakil,2:panitera/sekrataris,3:kabag,4:kasubab',
@@ -195,21 +203,28 @@ CREATE TABLE IF NOT EXISTS `surat_dispoisi` (
   `disposisi_dari_text` varchar(50) DEFAULT NULL COMMENT 'Pemberi disposisi Jabatan',
   `disposisi_ke_id` int(10) DEFAULT NULL COMMENT 'penerima disposisi (id user)',
   `disposisi_ke_text` varchar(50) DEFAULT NULL COMMENT 'penerima disposisi (jabatan)',
-  `tanggal_dispoisi` date DEFAULT NULL COMMENT 'tanggal disposisi',
+  `tanggal_disposisi` datetime DEFAULT NULL COMMENT 'tanggal disposisi',
   `isi_disposisi` varchar(50) DEFAULT NULL COMMENT 'isi disposisi',
   `created_by` varchar(50) DEFAULT NULL COMMENT 'Diinput Oleh: (by system)',
   `created_on` datetime DEFAULT NULL COMMENT 'Diinput Tanggal: (by system)',
   `modified_by` varchar(30) DEFAULT NULL COMMENT 'Diperbaharui oleh: (by system)',
   `modified_on` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
-  PRIMARY KEY (`id`,`id_surat_masuk`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_surat_masuk_tahapan_disposisi` (`id_surat_masuk`,`tahapan_disposisi`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
--- Dumping data for table remake_s03r4t.surat_dispoisi: ~0 rows (approximately)
-DELETE FROM `surat_dispoisi`;
-/*!40000 ALTER TABLE `surat_dispoisi` DISABLE KEYS */;
-/*!40000 ALTER TABLE `surat_dispoisi` ENABLE KEYS */;
+-- Dumping data for table remake_s03r4t.surat_disposisi: ~4 rows (approximately)
+DELETE FROM `surat_disposisi`;
+/*!40000 ALTER TABLE `surat_disposisi` DISABLE KEYS */;
+INSERT INTO `surat_disposisi` (`id`, `id_surat_masuk`, `tahapan_disposisi`, `disposisi_dari_id`, `disposisi_dari_text`, `disposisi_ke_id`, `disposisi_ke_text`, `tanggal_disposisi`, `isi_disposisi`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
+	(7, 17, 1, 2, 'Ketua/Wakil Ketua Pengadilan Tinggi', 0, '', '2017-05-20 00:00:00', 'cececececece', 'ketua', '2017-05-20 19:17:22', NULL, NULL),
+	(8, 17, 2, 4, 'Sekretaris', 0, '', '2017-05-20 20:35:11', 'jangan dimakan', 'sekretaris', '2017-05-20 20:35:11', NULL, NULL),
+	(9, 17, 3, 5, 'Kabag Umum Dan Keuangan', 0, '', '2017-05-20 21:28:43', 'selamatkan bumi dari dunia', 'umum', '2017-05-20 21:28:43', NULL, NULL),
+	(10, 19, 1, 2, 'Ketua/Wakil Ketua Pengadilan Tinggi', 0, '', '2017-05-20 21:32:45', 'asdasdsad', 'ketua', '2017-05-20 21:32:45', NULL, NULL);
+/*!40000 ALTER TABLE `surat_disposisi` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_keluar
+DROP TABLE IF EXISTS `surat_keluar`;
 CREATE TABLE IF NOT EXISTS `surat_keluar` (
   `id_surat_keluar` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id surat keluar auto inc',
   `no_surat_keluar` int(10) NOT NULL COMMENT 'nomorsurat keluar',
@@ -250,9 +265,10 @@ INSERT INTO `surat_keluar` (`id_surat_keluar`, `no_surat_keluar`, `jenis_surat_k
 /*!40000 ALTER TABLE `surat_keluar` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_masuk
+DROP TABLE IF EXISTS `surat_masuk`;
 CREATE TABLE IF NOT EXISTS `surat_masuk` (
   `id_surat_masuk` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id surat masuk auto inc',
-  `no_lembar_disposisi` int(10) NOT NULL COMMENT 'nomor lemar disposisi',
+  `no_lembar_disposisi` varchar(50) NOT NULL COMMENT 'nomor lemar disposisi',
   `tgl_masuk` date NOT NULL COMMENT 'tanggal surat masuk',
   `tujuan_id` int(11) DEFAULT NULL COMMENT '1:utama,2:tembusan',
   `tujuan_text` varchar(50) DEFAULT NULL COMMENT 'surat ditujukan kepada',
@@ -270,17 +286,18 @@ CREATE TABLE IF NOT EXISTS `surat_masuk` (
   `modified_on` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
   PRIMARY KEY (`id_surat_masuk`),
   UNIQUE KEY `no_lembar_disposisi` (`no_lembar_disposisi`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table remake_s03r4t.surat_masuk: ~2 rows (approximately)
 DELETE FROM `surat_masuk`;
 /*!40000 ALTER TABLE `surat_masuk` DISABLE KEYS */;
 INSERT INTO `surat_masuk` (`id_surat_masuk`, `no_lembar_disposisi`, `tgl_masuk`, `tujuan_id`, `tujuan_text`, `pengirim`, `perihal`, `file`, `status_id`, `status_text`, `disposisi_terakhir_text`, `disposisi_tujuan_id`, `catatan_tambahan`, `created_on`, `created_by`, `modified_by`, `modified_on`) VALUES
-	(17, 1, '2017-10-10', 1, 'Utama', '121', '1', '', 1, 'Register', NULL, 7, ' 1', '0000-00-00 00:00:00', '1', '1', '0000-00-00 00:00:00'),
-	(18, 2555, '2016-08-30', 1, 'Utama', 'PT. PEKANBARU', 'Pembentukan Tim Auditor Internal Perjamninan Mutu ', '', 2, 'Disposisi Tahap 1', NULL, 7, ' 23423', '2017-05-17 14:41:55', 'administrator', 'administrator', '2017-05-18 22:32:52');
+	(17, '1', '2017-10-10', 1, 'Utama', '121', '1', '', 4, 'Disposisi Tahap III', 'selamatkan bumi dari dunia', 7, ' 1', '0000-00-00 00:00:00', '1', '1', '0000-00-00 00:00:00'),
+	(19, '2342324', '2017-05-20', 1, 'Utama', 'eweqrwqe', 'qwerwq', '', 2, 'Disposisi Tahap I', 'asdasdsad', 7, ' wqrwq', '2017-05-20 21:32:02', 'administrator', NULL, NULL);
 /*!40000 ALTER TABLE `surat_masuk` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_proses
+DROP TABLE IF EXISTS `surat_proses`;
 CREATE TABLE IF NOT EXISTS `surat_proses` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `surat_id` int(10) unsigned NOT NULL COMMENT 'Id Perkara: merujuk ke tabel surat masuk kolom id surat masuk (by system)',
@@ -288,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `surat_proses` (
   `tahapan_nama` varchar(50) DEFAULT NULL COMMENT 'Nama Tahapan Proses: merujuk ke tabel tahapan_proses kolom nama (by system)',
   `proses_id` int(11) unsigned NOT NULL COMMENT 'Id Proses: merujuk ke tabel proses kolom id (by system)',
   `proses_nama` varchar(100) DEFAULT NULL COMMENT 'Nama Proses : merujuk ke tabel proses kolom nama (by system)',
-  `tanggal` date DEFAULT NULL COMMENT 'Tanggal Proses: (by system)',
+  `tanggal` datetime DEFAULT NULL COMMENT 'Tanggal Proses: (by system)',
   `keterangan` varchar(500) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Keterangan: (by system)',
   `urutan` int(11) unsigned NOT NULL COMMENT 'Urutan proses(by system)',
   `diinput_oleh` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Diinput Oleh: (by system)',
@@ -296,14 +313,20 @@ CREATE TABLE IF NOT EXISTS `surat_proses` (
   `diperbaharui_oleh` varchar(30) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Diperbaharui Oleh: (by system)',
   `diperbaharui_tanggal` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Data Riwayat Proses Perkara(generate by system)';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COMMENT='Data Riwayat Proses Perkara(generate by system)';
 
--- Dumping data for table remake_s03r4t.surat_proses: ~0 rows (approximately)
+-- Dumping data for table remake_s03r4t.surat_proses: ~4 rows (approximately)
 DELETE FROM `surat_proses`;
 /*!40000 ALTER TABLE `surat_proses` DISABLE KEYS */;
+INSERT INTO `surat_proses` (`id`, `surat_id`, `tahapan_id`, `tahapan_nama`, `proses_id`, `proses_nama`, `tanggal`, `keterangan`, `urutan`, `diinput_oleh`, `diinput_tanggal`, `diperbaharui_oleh`, `diperbaharui_tanggal`) VALUES
+	(5, 17, NULL, NULL, 2, 'Disposisi Tahap I', '2017-05-20 19:17:22', NULL, 0, 'ketua', '2017-05-20 19:17:22', NULL, NULL),
+	(6, 17, NULL, NULL, 3, 'Disposisi Tahap II', '2017-05-20 20:35:11', NULL, 0, 'sekretaris', '2017-05-20 20:35:11', NULL, NULL),
+	(7, 17, NULL, NULL, 4, 'Disposisi Tahap III', '2017-05-20 21:28:43', NULL, 0, 'umum', '2017-05-20 21:28:43', NULL, NULL),
+	(8, 19, NULL, NULL, 2, 'Disposisi Tahap I', '2017-05-20 21:32:45', NULL, 0, 'ketua', '2017-05-20 21:32:45', NULL, NULL);
 /*!40000 ALTER TABLE `surat_proses` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_audittrail
+DROP TABLE IF EXISTS `sys_audittrail`;
 CREATE TABLE IF NOT EXISTS `sys_audittrail` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary key: (by system)',
   `datetime` datetime NOT NULL COMMENT 'Waktu Aktifitas: (by system)',
@@ -324,6 +347,7 @@ DELETE FROM `sys_audittrail`;
 /*!40000 ALTER TABLE `sys_audittrail` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_box_name
+DROP TABLE IF EXISTS `sys_box_name`;
 CREATE TABLE IF NOT EXISTS `sys_box_name` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama_box` varchar(50) NOT NULL DEFAULT '0',
@@ -339,6 +363,7 @@ INSERT INTO `sys_box_name` (`id`, `nama_box`) VALUES
 /*!40000 ALTER TABLE `sys_box_name` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_config
+DROP TABLE IF EXISTS `sys_config`;
 CREATE TABLE IF NOT EXISTS `sys_config` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primari Key',
   `category` varchar(50) NOT NULL DEFAULT 'System' COMMENT 'Kategori Konfigurasi',
@@ -433,6 +458,7 @@ INSERT INTO `sys_config` (`id`, `category`, `name`, `value`, `ordering`) VALUES
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_forms
+DROP TABLE IF EXISTS `sys_forms`;
 CREATE TABLE IF NOT EXISTS `sys_forms` (
   `name` varchar(150) NOT NULL DEFAULT '' COMMENT 'Nama Form Aplikasi',
   `description` varchar(255) DEFAULT NULL COMMENT 'Keterangan',
@@ -445,6 +471,7 @@ DELETE FROM `sys_forms`;
 /*!40000 ALTER TABLE `sys_forms` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_groups
+DROP TABLE IF EXISTS `sys_groups`;
 CREATE TABLE IF NOT EXISTS `sys_groups` (
   `id` int(11) NOT NULL COMMENT 'Primary Key: (by system)',
   `parent_id` int(11) DEFAULT NULL COMMENT 'Grup induk: merujuk ke tabel sys_groups kolom groupid',
@@ -470,7 +497,7 @@ CREATE TABLE IF NOT EXISTS `sys_groups` (
   KEY `idx_groups_nested_set_lookup` (`lft`,`rgt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Data Grup User aplikasi';
 
--- Dumping data for table remake_s03r4t.sys_groups: ~21 rows (approximately)
+-- Dumping data for table remake_s03r4t.sys_groups: ~23 rows (approximately)
 DELETE FROM `sys_groups`;
 /*!40000 ALTER TABLE `sys_groups` DISABLE KEYS */;
 INSERT INTO `sys_groups` (`id`, `parent_id`, `level`, `lft`, `rgt`, `name`, `description`, `enable`, `ordering`, `lock_by`, `lock_on`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
@@ -498,6 +525,7 @@ INSERT INTO `sys_groups` (`id`, `parent_id`, `level`, `lft`, `rgt`, `name`, `des
 /*!40000 ALTER TABLE `sys_groups` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_menus
+DROP TABLE IF EXISTS `sys_menus`;
 CREATE TABLE IF NOT EXISTS `sys_menus` (
   `id` int(11) unsigned NOT NULL COMMENT 'Primary Key: (by system)',
   `menutype` varchar(24) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT 'Type Menu: merujuk ke tabel sys_menu_type kolom menutype',
@@ -541,6 +569,7 @@ DELETE FROM `sys_menus`;
 /*!40000 ALTER TABLE `sys_menus` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_pesan
+DROP TABLE IF EXISTS `sys_pesan`;
 CREATE TABLE IF NOT EXISTS `sys_pesan` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` bigint(20) unsigned DEFAULT NULL,
@@ -566,6 +595,7 @@ DELETE FROM `sys_pesan`;
 /*!40000 ALTER TABLE `sys_pesan` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_users
+DROP TABLE IF EXISTS `sys_users`;
 CREATE TABLE IF NOT EXISTS `sys_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'UserId: (by system)',
   `ip_address` varchar(45) NOT NULL DEFAULT '0' COMMENT 'bawaan Ion Auth',
@@ -612,15 +642,16 @@ CREATE TABLE IF NOT EXISTS `sys_users` (
 DELETE FROM `sys_users`;
 /*!40000 ALTER TABLE `sys_users` DISABLE KEYS */;
 INSERT INTO `sys_users` (`id`, `ip_address`, `fullname`, `username`, `password`, `salt`, `old_password`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `active`, `first_name`, `last_name`, `company`, `phone`, `alternative_email`, `allow_concurrent_login`, `has_change_password`, `enable_change_password`, `last_change_password`, `password_expired_remainder`, `attemp_count`, `attemp_time`, `user_expired`, `last_login`, `block`, `code_activation`, `params`, `lock_by`, `lock_on`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
-	(1, '127.0.0.1', 'Admin', 'administrator', '$2y$08$jwvhmNn2DujUarnTmEU6yO9/AoZ9UWjNvVXl125pfczpo9qEmvkL6', '', '', 'admin@admin.com', '', NULL, NULL, 'mIJgjwdK1.q/AlDojhepte', 1, 'Admin', 'istrator', 'ADMIN', '0', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495263196, 0, NULL, '', '', NULL, NULL, 1268889823, NULL, NULL),
-	(2, '::1', 'Ketua', 'ketua', '$2y$08$2Jqoc2LfNeT/zhECQqfJHeCHiToZQU0gjErtqfTPurGON9gEP4KMS', '', '', 'asdf@adfasd.com', NULL, '', NULL, NULL, 1, 'Ketua', 'Wakil', '21', 'saf', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495263209, 0, NULL, '', '', NULL, NULL, 1494502784, NULL, NULL),
-	(4, '::1', 'Sekretaris', 'sekretaris', '$2y$08$ynW/tsgzgx24qz01N6Uy5.1Eh0c/e6KA4VJVG8jb0fNf2zTjMUWMO', '', '', 'sekretaris@gmail.com', '', '', NULL, NULL, 1, 'Sekretaris', 'Tarisss', 'mewmew', '0000', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, NULL, 0, NULL, '', '', NULL, NULL, 1494925841, NULL, NULL),
-	(5, '::1', 'Umum', 'umum', '$2y$08$m/zeWtB.VfUefg.4FxeIDOS3MiKSXLZ0hZLlgqCRsQArngq7f7i56', '', '', 'uu@gmail.com', '', '', NULL, NULL, 2, 'kabag', 'Umum', 'uuum', '123123', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495031183, 0, NULL, '', '', NULL, NULL, 1494925886, NULL, NULL),
+	(1, '127.0.0.1', 'Admin', 'administrator', '$2y$08$HSZjHc9PC6yNSVUv5tMs1OuwBvFDz5qedPPPSHWvKdxmgBgszLNAC', '', '', 'admin@admin.com', '', NULL, NULL, 'mIJgjwdK1.q/AlDojhepte', 1, 'Admin', 'istrator', 'ADMIN', '076123456', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495297670, 0, NULL, '', '', NULL, NULL, 1268889823, NULL, NULL),
+	(2, '::1', 'Ketua', 'ketua', '$2y$08$2Jqoc2LfNeT/zhECQqfJHeCHiToZQU0gjErtqfTPurGON9gEP4KMS', '', '', 'asdf@adfasd.com', NULL, '', NULL, NULL, 1, 'Ketua', 'Wakil', '21', 'saf', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495290741, 0, NULL, '', '', NULL, NULL, 1494502784, NULL, NULL),
+	(4, '::1', 'Sekretaris', 'sekretaris', '$2y$08$ynW/tsgzgx24qz01N6Uy5.1Eh0c/e6KA4VJVG8jb0fNf2zTjMUWMO', '', '', 'sekretaris@gmail.com', '', '', NULL, NULL, 1, 'Sekretaris', 'Tarisss', 'mewmew', '0000', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495282770, 0, NULL, '', '', NULL, NULL, 1494925841, NULL, NULL),
+	(5, '::1', 'Umum', 'umum', '$2y$08$GVKqCGsqc4jlN6OV3HbFUe38RIyGcRDPDzoATkx1UgDBzivp6nu2e', '', '', 'uu@gmail.com', '', '', NULL, NULL, 2, 'kabag', 'Umum', 'uuum', '123123', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495290133, 0, NULL, '', '', NULL, NULL, 1494925886, NULL, NULL),
 	(6, '::1', 'msdfs', 'cicak', '$2y$08$r0zmGPkWJBigYzfrIvBMA.fYWGoACFQk/qsTwuH662Vx7gCI03THy', '', '', 'ads@asd.com', '', '', NULL, NULL, 1, '', '', '', '0000', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, NULL, 0, NULL, '', '', NULL, NULL, 1495026737, NULL, NULL),
 	(7, '::1', '1231', '123121', '$2y$08$u.8BxLIbCGqU5Hc/u8zXU.ZbG3iT/hwS0IyVYW4Vv8ue.XHiigkFm', '', '', '1231@dss.com', '', '', NULL, NULL, 1, '', '', '', '12312', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, NULL, 0, NULL, '', '', NULL, NULL, 1495028956, NULL, NULL);
 /*!40000 ALTER TABLE `sys_users` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_user_group
+DROP TABLE IF EXISTS `sys_user_group`;
 CREATE TABLE IF NOT EXISTS `sys_user_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(11) NOT NULL DEFAULT '0' COMMENT 'UserId: merujuk ke tabel sys_users kolom userid',
@@ -631,7 +662,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_group` (
   KEY `userid` (`userid`),
   CONSTRAINT `FK_sys_user_group_sys_groups` FOREIGN KEY (`groupid`) REFERENCES `sys_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_sys_user_group_sys_users` FOREIGN KEY (`userid`) REFERENCES `sys_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1 COMMENT='Data Hubungan User Dengan Grup';
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1 COMMENT='Data Hubungan User Dengan Grup';
 
 -- Dumping data for table remake_s03r4t.sys_user_group: ~6 rows (approximately)
 DELETE FROM `sys_user_group`;
@@ -640,12 +671,13 @@ INSERT INTO `sys_user_group` (`id`, `userid`, `groupid`) VALUES
 	(23, 1, 2),
 	(12, 2, 10),
 	(17, 4, 40),
-	(43, 5, 60),
+	(44, 5, 60),
 	(25, 6, 2),
 	(26, 7, 2);
 /*!40000 ALTER TABLE `sys_user_group` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.sys_user_online
+DROP TABLE IF EXISTS `sys_user_online`;
 CREATE TABLE IF NOT EXISTS `sys_user_online` (
   `session_id` char(32) NOT NULL DEFAULT '' COMMENT 'SessionId (by system)',
   `userid` int(11) NOT NULL COMMENT 'UserId: merujuk ke tabel sys_users ke kolom userid (by system)',
@@ -665,6 +697,7 @@ DELETE FROM `sys_user_online`;
 /*!40000 ALTER TABLE `sys_user_online` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(45) NOT NULL,
@@ -686,7 +719,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table remake_s03r4t.users: ~1 rows (approximately)
+-- Dumping data for table remake_s03r4t.users: ~0 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
@@ -694,6 +727,7 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.users_groups
+DROP TABLE IF EXISTS `users_groups`;
 CREATE TABLE IF NOT EXISTS `users_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
