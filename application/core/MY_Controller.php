@@ -18,8 +18,7 @@ class MY_Controller extends CI_Controller {
 			redirect('login', 'refresh');
 		}
 
-		$user = $this->ion_auth->user()->row();
-		$this->full_name = $user->first_name . ' ' . $user->last_name;
+		$this->user = $this->ion_auth->user()->row();
 		$this->groups = $this->ion_auth->get_users_groups()->result();
 
 

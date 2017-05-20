@@ -248,6 +248,64 @@ public function ajax_delete_users()
 		echo 'NO';
 	}
 }
+
+
+public function profile()
+{
+
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$id = $this->input->post('id');
+		$container = array(
+
+			
+			'fullname' => $this->input->post('fullname'),
+			'phone'      => $this->input->post('phone'),
+			'email' => 	$this->input->post('email')
+			);
+
+
+// update the password if it was posted
+		if ($this->input->post('password'))
+		{
+			$container['password'] = $this->input->post('password');
+		}
+
+		$res = $this->ion_auth->update($id, $container);
+		if ($res) {
+			$this->session->set_flashdata('message', 'Berhasil merubah Data User');
+			
+		}
+
+		else if ($this->db->error()['code'] == 1062) {
+			$this->session->set_flashdata('message', 'Duplikat Terdeteksi');
+			
+		}
+		else {
+			$this->session->set_flashdata('message', 'Gagal Merubah User, Cek email' );
+			
+		}
+		redirect('profile','refresh');
+	}
+
+
+	else 
+		{	echo $this->session->flashdata('message');
+	echo validation_errors();
+
+	$data['message']      = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
+	$userid = currentUser('id');
+	$data['user'] = $this->md_Global->get_data_single('sys_users', array('id' => $userid));
+	$this->template->append_metadata('<script src="'. base_url("assets/plugins/parsleyjs/dist/parsley.min.js") . '"></script>');
+	$this->template->append_metadata('<script src="'. base_url("assets/plugins/parsleyjs/dist/i18n/id.js") . '"></script>');
+	$this->template->build('vw_profile', $data);
+}
+
+
+
+
+}
 }
 
 /* End of file arsip.php */

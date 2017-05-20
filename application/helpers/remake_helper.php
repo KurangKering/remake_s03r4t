@@ -68,3 +68,55 @@ if ( ! function_exists('recursive'))
 	}
 
 }
+
+
+if ( ! function_exists('showNotificationToastr'))
+{
+
+	function showNotificationToastr($typeOfMessage,$message)
+	{
+		$toastr = '<script>';
+		$toastr .= 'toastr.options = {';
+		$toastr .= '	"closeButton": false,';
+		$toastr .= '	"debug": false,';
+		$toastr .= '	"newestOnTop": false,';
+		$toastr .= '	"progressBar": false,';
+		$toastr .= '	"positionClass": "toast-top-center",';
+		$toastr .= '	"preventDuplicates": true,';
+		$toastr .= '	"onclick": null,';
+		$toastr .= '	"showDuration": "0",';
+		$toastr .= '	"hideDuration": "0",';
+		$toastr .= '	"timeOut": "1000",';
+		$toastr .= '	"extendedTimeOut": "0",';
+		$toastr .= '	"showEasing": "swing",';
+		$toastr .= '	"hideEasing": "linear",';
+		$toastr .= '	"showMethod": "fadeIn",';
+		$toastr .= '	"hideMethod": "fadeOut" },';
+		$toastr .= '	toastr["'.$typeOfMessage.'"]("'.$message.'")';
+		$toastr .= '</script>';
+
+		return $toastr;
+	}
+
+}
+
+if ( ! function_exists('showNotificationInspinia'))
+{
+
+	function showNotificationInspinia($typeOfMessage,$message)
+	{
+		$inspinia = '  
+		<div class="alert alert-'.$typeOfMessage.' alert-dismissable">
+			<button aria-hidden="true" 
+			data-dismiss="alert" 
+			class="close" 
+			type="button">×</button>
+			'.$message.'
+			
+		</div>
+		';
+
+		return $inspinia;
+	}
+
+}

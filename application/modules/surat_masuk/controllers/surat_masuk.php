@@ -10,7 +10,11 @@ class Surat_masuk extends MY_Controller {
 		$this->load->model('md_surat_masuk');
 	}
 
-	
+	public function dummy()
+	{
+		$itemDisposisi = $this->md_surat_masuk->select_data_disposisi(17);
+		debug($itemDisposisi);
+	}
 	public function index()
 	{
 		redirect('surat_masuk/lihat','refresh');
@@ -78,12 +82,13 @@ class Surat_masuk extends MY_Controller {
 
 			$res = $this->md_Global->insert_data('surat_masuk', $container);
 			if ($res) {
-				$this->session->set_flashdata('message', 'Berhasil entry surat Masuk');
+				$this->session->set_flashdata('message', showNotificationToastr('success', 'Berhasil Menambah Surat Masuk'));
 				redirect('surat_masuk/lihat','refresh');
 			}
 		} else {
-			
-			echo validation_errors();
+			if (validation_errors() != false) {
+				$data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors());
+			}
 			$data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
 
 			$this->template->append_metadata('<link href="'. base_url("themes/inspinia/css/plugins/iCheck/custom.css").'" rel="stylesheet">');
@@ -164,16 +169,17 @@ class Surat_masuk extends MY_Controller {
 
 				$res = $this->md_Global->update_data('surat_masuk', $container, array('id_surat_masuk' => $id));
 				if ($res) {
-					$this->session->set_flashdata('message', 'Berhasil merubah data surat Masuk');
+
+					$this->session->set_flashdata('message', showNotificationToastr('success', 'Berhasil Merubah Surat Masuk'));
 					redirect('surat_masuk','refresh');
 				}
 				else if ($this->db->error()['code'] == 1062) {
-					$this->session->set_flashdata('message', 'Duplikat Nomor Lembar Disposisi terdeteksi');
+					$this->session->set_flashdata('message', showNotificationToastr('error', 'Duplikat Nomor lembar Disposisi'));
 					redirect('surat_masuk/ubah/' . $id,'refresh');
 				}
 			}
 			else {
-				$data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
 				$surat_masuk = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
 				$data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
 				$data['surat_masuk'] = $surat_masuk;
@@ -183,7 +189,7 @@ class Surat_masuk extends MY_Controller {
 		} 
 		else 
 		{
-			$data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+			validation_errors() != false ? $data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors()) : '';
 			$data['surat_masuk'] = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
 			$data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
 			$this->template->build('vw_ubah', $data);
@@ -218,7 +224,7 @@ class Surat_masuk extends MY_Controller {
 
 			$var = $this->md_surat_masuk->json_select_disposisi(3);
 		}
-	
+
 		echo $var;
 	}
 
@@ -286,6 +292,148 @@ class Surat_masuk extends MY_Controller {
 		else {
 			echo 'NO';
 		}
+	}
+
+
+
+
+
+
+	/*start from this line is disposition*/
+
+
+
+	public function cetak_disposisi($id)
+	{
+		$data['data_disposisi'] = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
+		$this->load->view('vw_template_disposisi', $data);
+	}
+
+
+	public function modalDisposisi()
+	{	
+		$arrData = array();
+		$id = $this->input->post('id_surat_masuk');
+		$data = $this->md_surat_masuk->select_detail($id);
+		if($data)
+		{
+			$arrData['table']    = '<table class="table table-condensed table-striped">';
+			$arrData['table'] 	  .= "<tr><td>Nomor Lembar Disposisi</td><td>".$data['no_lembar_disposisi']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Tanggal Masuk</td><td>".date_converter($data['tgl_masuk'])."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Ditujukan Kepada</td><td>".$data['tujuan_text']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Pengirim Surat</td><td>".$data['pengirim']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Perihal</td><td>".$data['perihal']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Disposisi Tujuan</td><td>".$data['eselon_nama']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Status</td><td>".$data['tahap_nama']."</td></tr>";	
+			
+			$arrData['table'] 	  .= "<tr><td>Catatan Tambahan</td><td>".$data['catatan_tambahan']."</td></tr>";	
+			$file  	   = ($data['file'] ? anchor(base_url('uploads/surat_masuk/' . $data['file']), 'Click Untuk Melihat File Ini','target="_blank"') :'..');
+			$arrData['table'] 	  .= "<tr><td>File Scanned</td><td>".$file."</td></tr>";	
+			$arrData['table'] 	  .= '';
+			$arrData['table']    .= '</table>';
+
+		}
+
+		$arrData['itemDisposisi'] = $this->showStatusDisposisi($id);
+
+		
+
+		$arrData['id_surat_masuk'] = $id;
+		$arrData['pemberi_disposisi'] = currentUser('id');
+		$arrData['disposisi_dari_text'] = $this->ion_auth->get_users_groups()->result()[0]->name;
+
+		if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['1']))) {
+			$arrData['tahapan_disposisi'] = '1';
+		}
+		else if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['2']))) {
+			$arrData['tahapan_disposisi'] = '2';
+			# code...
+		}
+		else if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['3']))) {
+			$arrData['tahapan_disposisi'] = '3';
+			# code...
+		}
+		else if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['4']))) {
+			$arrData['tahapan_disposisi'] = '4';
+			# code...
+		}
+
+
+		echo json_encode($arrData);
+	}
+
+	public function showStatusDisposisi($id = null)
+	{
+		$id == null ? $id = $this->input->post('id_surat_masuk') : '';
+
+		$data = '';
+		$itemDisposisi = $this->md_surat_masuk->select_data_disposisi($id);
+		foreach ($itemDisposisi as $key => $item) {
+
+			$data .= '<div class="row">';
+			$data .= '<div class="col-md-12">';
+			$data .= '<form class="form-horizontal">';
+			$data .= '<fieldset>';
+			$data .= '<legend>Disposisi Tahap '.$item['tahapan_disposisi'].'</legend>';
+			$data .= '<div class="form-group">';
+			$data .= '<label class="control-label col-md-3 col-sm-3 col-xs-12" for="disposisi_dari_text">Dari';
+			$data .= '</label>';
+			$data .= '<div class="col-md-6 col-sm-6 col-xs-12">';
+			$data .= '<input value="'.$item['disposisi_dari_text'].'"id="disposisi_dari_text" class="form-control" name="disposisi_dari_text" readonly="" type="text">';
+			$data .= '</div>';
+			$data .= '</div>';
+			$data .= '<div class="form-group">';
+			$data .= '<label class="control-label col-md-3 col-sm-3 col-xs-12" for="isi_disposisi">Isi Disposisi</label>';
+			$data .= '<div class="col-md-6 col-sm-6 col-xs-12">';
+			$data .= '<textarea id="isi_disposisi" name="isi_disposisi"   readonly required="" class="form-control">'.$item['isi_disposisi'].'</textarea>';
+			$data .= '</div>';
+			$data .= '</div>';
+			$data .= '</fieldset>';
+			$data .= '</form>';
+			$data .= '</div>';
+			$data .= '</div>';
+			$data .= '<hr>';
+		}
+		if ($_POST) {
+			echo $data;
+		}
+		return $data;
+	}
+	public function doDisposisi()
+	{
+		$data_surat_disposisi = array(
+			'id_surat_masuk' => $this->input->post('id_surat_masuk'),
+			'tahapan_disposisi' => $this->input->post('tahapan_disposisi'),
+			'disposisi_dari_id' => $this->input->post('disposisi_dari_id'),
+			'disposisi_dari_text' => $this->input->post('disposisi_dari_text'),
+			'isi_disposisi' => $this->input->post('isi_disposisi'),
+			'disposisi_ke_id' => '',
+			'disposisi_ke_text' => '',
+			'tanggal_disposisi' => date("Y-m-d H:i:s"),
+			'created_by' => currentUser('username'),
+			'created_on' => date("Y-m-d H:i:s"),
+			);
+
+		$data_surat_proses = array(
+
+			'surat_id' => $this->input->post('id_surat_masuk'),
+			'proses_id' => ($this->input->post('tahapan_disposisi') + 1),
+			'proses_nama' => $this->md_Global->get_data_single('ref_tahapan_proses', array('Id' => ($this->input->post('tahapan_disposisi') + 1)))['nama'],
+			'tanggal' => date('Y-m-d H:i:s'),
+			'diinput_oleh' => currentUser('username'),
+			'diinput_tanggal' =>  date('Y-m-d H:i:s')
+
+			);
+		$data_surat_masuk = array(
+			'disposisi_terakhir_text' => $this->input->post('isi_disposisi'),
+			'status_id' => ($this->input->post('tahapan_disposisi') + 1),
+			'status_text' => $this->md_Global->get_data_single('ref_tahapan_proses', array('Id' => ($this->input->post('tahapan_disposisi') + 1)))['nama']
+			);
+		$this->md_Global->insert_data('surat_disposisi', $data_surat_disposisi);
+		$this->md_Global->insert_data('surat_proses', $data_surat_proses);
+		$this->md_Global->update_data('surat_masuk', $data_surat_masuk, array('id_surat_masuk' => $this->input->post('id_surat_masuk')));
+
+		echo 'OK';
 	}
 }
 

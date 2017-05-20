@@ -13,6 +13,7 @@
 
   <link href="<?php echo base_url('themes/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?php echo base_url('themes/inspinia/') ?>css/style.css" rel="stylesheet">
+  <link href="<?php echo base_url('assets/plugins/toastr/') ?>toastr.min.css" rel="stylesheet">
 
 
 
@@ -21,6 +22,7 @@
   <script src="<?php echo base_url('themes/inspinia/') ?>js/bootstrap.min.js"></script>
   <script src="<?php echo base_url('themes/inspinia/') ?>js/plugins/metisMenu/jquery.metisMenu.js"></script>
   <script src="<?php echo base_url('themes/inspinia/') ?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="<?php echo base_url('assets/plugins/toastr/') ?>toastr.min.js"></script>
 
   <!-- Custom and plugin javascript -->
   <script src="<?php echo base_url('themes/inspinia/') ?>js/inspinia.js"></script>
@@ -42,16 +44,16 @@
 <img alt="image" class="img-circle" src="<?php echo base_url('themes/inspinia/') ?>img/profile_small.jpg" />
 </span> -->
 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-  <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $this->full_name; ?></strong>
-  </span> <span class="text-muted text-xs block">Groups <b class="caret"></b></span> </span> </a>
-  <ul class="dropdown-menu animated fadeInRight m-t-xs">
+  <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $this->user->fullname; ?></strong>
+  </span> <span class="text-muted text-xs block"><?php echo $this->groups[0]->name ?> <!-- <b class="caret"> --></b></span> </span> </a>
+ <!--  <ul class="dropdown-menu animated fadeInRight m-t-xs">
     <li class="divider"></li>
     <?php foreach ($this->groups as $key => $group): ?>
       <li><a href="#"><?php echo $group->name ?></a></li>
     <?php endforeach ?>
     <li class="divider"></li>
 
-  </ul>
+  </ul> -->
 </div>
 <div class="logo-element">
   +++
@@ -153,6 +155,7 @@
 </div>
 </div>
 
+<?php echo $this->session->flashdata('message'); ?>
 
 </body>
 

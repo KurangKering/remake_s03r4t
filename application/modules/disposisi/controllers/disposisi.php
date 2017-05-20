@@ -22,10 +22,6 @@ class Disposisi extends MY_Controller {
 		$this->load->view('vw_template_disposisi', $data);
 	}
 
-	public function tahap_satu()
-	{
-
-	}
 	public function modalDisposisi()
 	{	
 		$arrData = array();
@@ -50,8 +46,77 @@ class Disposisi extends MY_Controller {
 			$arrData['table']    .= '</table>';
 
 		}
-		$arrData['pemberi_disposisi'] = $this->ion_auth->user()->row();
+		$arrData['id_surat_masuk'] = $id;
+		$arrData['pemberi_disposisi'] = currentUser('id');
+		$arrData['disposisi_dari_text'] = $this->ion_auth->get_users_groups()->result()[0]->name;
+
+		if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['1']))) {
+			$arrData['tahapan_disposisi'] = '1';
+		}
+		else if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['2']))) {
+			$arrData['tahapan_disposisi'] = '2';
+			# code...
+		}
+		else if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['3']))) {
+			$arrData['tahapan_disposisi'] = '3';
+			# code...
+		}
+		else if (!empty(array_intersect($this->ion_auth->get_user_groups(), $this->config->item('disposisi')['tahap']['4']))) {
+			$arrData['tahapan_disposisi'] = '4';
+			# code...
+		}
+
+
 		echo json_encode($arrData);
+	}
+
+	public function dummy()
+	{
+		$isExist = (bool)
+		$this->md_Global->get_data_single(
+			'surat_disposisi', 
+			array(
+				'id_surat_masuk' => 1,
+				'tahapan_disposisi' => 1
+				));
+
+		debug( $isExist);
+	}
+
+	public function doDisposisi()
+	{
+		$container = array(
+			'id_surat_masuk' => $this->input->post('id_surat_masuk'),
+			'tahapan_disposisi' => $this->input->post('tahapan_disposisi'),
+			'disposisi_dari_id' => $this->input->post('disposisi_dari_id'),
+			'disposisi_dari_text' => $this->input->post('disposisi_dari_text'),
+			'isi_disposisi' => $this->input->post('isi_disposisi'),
+			'disposisi_ke_id' => '',
+			'disposisi_ke_text' => '',
+			'tanggal_disposisi' => date("Y-m-d H:i:s"),
+			'created_by' => currentUser('username'),
+			'created_on' => date("Y-m-d H:i:s"),
+			);
+
+		
+	}
+
+
+
+	public function tahap_satu()
+	{
+
+	}
+
+	public function tahap_dua()
+	{
+
+	}
+
+
+	public function tahap_tiga()
+	{
+
 	}
 }
 

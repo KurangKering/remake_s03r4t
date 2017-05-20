@@ -40,8 +40,8 @@ $config['surat_arsip']['status']['1'] = 'Ada';
 $config['surat_arsip']['status']['2'] = 'Dipinjam'; 
 $config['surat_arsip']['status']['3'] = 'Hilang'; 
 
-$config['disposisi']['tahap']['1'] = 'Ketua / Wakil'; 
-$config['disposisi']['tahap']['2'] = 'Panitera / Sekretaris'; 
-$config['disposisi']['tahap']['3'] = 'Kepala Bagian'; 
-$config['disposisi']['tahap']['4'] = 'Kepala Sub Bagian'; 
+$config['disposisi']['tahap']['1'] = array('10'); 
+$config['disposisi']['tahap']['2'] = array('30', '40'); 
+$config['disposisi']['tahap']['3'] = array('50', '60');
+$config['disposisi']['tahap']['4'] = array('70', '80', '90', '100'); 
 

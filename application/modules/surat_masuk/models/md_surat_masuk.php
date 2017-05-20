@@ -80,8 +80,22 @@ class Md_Surat_masuk extends CI_Model {
 		->add_column('nomor_urut', '0')
 		->add_column(
 			'detail_perihal',
-			'<a href="#" onClick="showDetails($1)">$2</a>',
+			'<a href="#" 
+			class=""
+			onClick="showDetails($1)">$2</a>',
 			'id_surat_masuk,perihal'
+			)
+		->add_column(
+			'status',
+			'<a 
+			href="#"
+			onClick="showStatusDisposisi($1)" 
+			id="detail" 
+			data-keyboard="false" 
+			data-backdrop="static"
+			title="Status Disposisi">
+			$2</a>',
+			'id_surat_masuk,status_nama'
 			)
 		->add_column(
 			'view', 
@@ -144,6 +158,18 @@ class Md_Surat_masuk extends CI_Model {
 			'id_surat_masuk,perihal'
 			)
 		->add_column(
+			'status',
+			'<button 
+			class="btn btn-default btn-md" 
+			onClick="showStatusDisposisi($1)" 
+			id="detail" 
+			data-keyboard="false" 
+			data-backdrop="static"
+			title="Detail">
+			$2</button>',
+			'id_surat_masuk,status_nama'
+			)
+		->add_column(
 			'view', 
 			'
 			<button 
@@ -159,6 +185,25 @@ class Md_Surat_masuk extends CI_Model {
 
 		return $this->datatables->generate();
 
+	}
+
+
+	public function select_data_disposisi($id)
+	{
+		
+		$sql = 'SELECT
+		surat_disposisi.*,
+		sys_users.id as userid,
+		sys_users.fullname,
+		sys_groups.name as group_name
+		FROM surat_disposisi
+		JOIN sys_users on surat_disposisi.disposisi_dari_id = sys_users.id
+		JOIN sys_user_group ON  sys_users.id = sys_user_group.userid
+		JOIN sys_groups ON sys_user_group.groupid = sys_groups.id
+		WHERE id_surat_masuk = ?
+		ORDER BY tahapan_disposisi
+		';
+		return $this->db->query($sql, array($id))->result_array();
 	}
 
 }
