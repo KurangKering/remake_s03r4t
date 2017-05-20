@@ -22,19 +22,37 @@ class Disposisi extends MY_Controller {
 		$this->load->view('vw_template_disposisi', $data);
 	}
 
-	public function otomatis()
+	public function tahap_satu()
 	{
-		$document = file_get_contents("./uploads/template/template_disposisi.rtf");
-		$document = str_replace("#Indeks", '11111111af sadfs adfsd fsd111', $document);
-		$document = str_replace("#tanggal", '2222222 sdfsa fs fs fsdf s2', $document);
-		$document = str_replace("#urut", '3333f asdfsa fsd sa33', $document);
-		$document = str_replace("#perihal", '21312 123 123 123 123 123 123 123 123 123 123 13 12', $document);
-		header("Content-type: application/msword");
-		header("Content-disposition: inline; filename=laporan.doc");
-		header("Content-length: ".strlen($document));
-		echo $document;
-	}
 
+	}
+	public function modalDisposisi()
+	{	
+		$arrData = array();
+		$this->load->model('surat_masuk/md_surat_masuk');
+		$id = $this->input->post('id_surat_masuk');
+		$data = $this->md_surat_masuk->select_detail($id);
+		if($data)
+		{
+			$arrData['table']    = '<table class="table table-condensed table-striped">';
+			$arrData['table'] 	  .= "<tr><td>Nomor Lembar Disposisi</td><td>".$data['no_lembar_disposisi']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Tanggal Masuk</td><td>".date_converter($data['tgl_masuk'])."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Ditujukan Kepada</td><td>".$data['tujuan_text']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Pengirim Surat</td><td>".$data['pengirim']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Perihal</td><td>".$data['perihal']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Disposisi Tujuan</td><td>".$data['eselon_nama']."</td></tr>";	
+			$arrData['table'] 	  .= "<tr><td>Status</td><td>".$data['tahap_nama']."</td></tr>";	
+			
+			$arrData['table'] 	  .= "<tr><td>Catatan Tambahan</td><td>".$data['catatan_tambahan']."</td></tr>";	
+			$file  	   = ($data['file'] ? anchor(base_url('uploads/surat_masuk/' . $data['file']), 'Click Untuk Melihat File Ini','target="_blank"') :'..');
+			$arrData['table'] 	  .= "<tr><td>File Scanned</td><td>".$file."</td></tr>";	
+			$arrData['table'] 	  .= '';
+			$arrData['table']    .= '</table>';
+
+		}
+		$arrData['pemberi_disposisi'] = $this->ion_auth->user()->row();
+		echo json_encode($arrData);
+	}
 }
 
 /* End of file disposisi.php */

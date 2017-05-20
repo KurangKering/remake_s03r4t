@@ -29,7 +29,7 @@ class Users extends MY_Controller {
 
 	public function tambah()
 	{
-		
+
 		$this->template->title('Tambah | Users');
 		$this->form_validation->set_rules(
 			'email',
@@ -63,7 +63,7 @@ class Users extends MY_Controller {
 
 
 		else {
-			
+
 			echo validation_errors();
 
 			$data['groups'] =$this->ion_auth->groups()->result_array();
@@ -80,11 +80,11 @@ class Users extends MY_Controller {
 		if ($this->form_validation->run() == true && $id_user = $this->ion_auth->register($identity, $password, $email, $additional_data))
 		{
 
-			//Update the groups user belongs to
+//Update the groups user belongs to
 			$groupData = $this->input->post('groups');
 
 			if (isset($groupData) && !empty($groupData)) {
-				
+
 				$this->ion_auth->remove_from_group('', $id_user);
 				foreach ($groupData as $grp) {
 					$this->ion_auth->add_to_group($grp, $id_user);
@@ -93,14 +93,14 @@ class Users extends MY_Controller {
 			}
 
 
-            // check to see if we are creating the user
-            // redirect them back to the admin page
+// check to see if we are creating the user
+// redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
 			redirect("users/lihat", 'refresh');
 		}
 
-		
-		
+
+
 
 	}
 
@@ -134,13 +134,13 @@ class Users extends MY_Controller {
 				);
 
 
-			// update the password if it was posted
+// update the password if it was posted
 			if ($this->input->post('password'))
 			{
 				$container['password'] = $this->input->post('password');
 			}
 
-			//Update the groups user belongs to
+//Update the groups user belongs to
 			$groupData = $this->input->post('groups');
 
 			if (isset($groupData) && !empty($groupData)) {
@@ -176,7 +176,7 @@ class Users extends MY_Controller {
 		echo validation_errors();
 
 		$data['message']      = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
-		
+
 		$this->template->build('users/vw_ubah', $data);
 	}
 
@@ -189,7 +189,6 @@ public function hapus()
 
 
 
-/*start from this line is ajax request php */
 
 public function ajax_lihat()
 {

@@ -208,15 +208,15 @@ class Surat_masuk extends MY_Controller {
 		}
 		else if ($this->ion_auth->in_group(10, currentUser('id'))) {
 
-			$var = $this->md_surat_masuk->json_select_disposisi(2);
+			$var = $this->md_surat_masuk->json_select_disposisi(1);
 		}
 		else if ($this->ion_auth->in_group(array(30,40), currentUser('id'))) {
 
-			$var = $this->md_surat_masuk->json_select_disposisi(3);
+			$var = $this->md_surat_masuk->json_select_disposisi(2);
 		}
 		else if ($this->ion_auth->in_group(array(50,60), currentUser('id'))) {
 
-			$var = $this->md_surat_masuk->json_select_disposisi(4);
+			$var = $this->md_surat_masuk->json_select_disposisi(3);
 		}
 	
 		echo $var;

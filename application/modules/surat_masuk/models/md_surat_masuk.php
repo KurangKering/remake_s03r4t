@@ -148,10 +148,10 @@ class Md_Surat_masuk extends CI_Model {
 			'
 			<button 
 			class="btn btn-default btn-md" 
-			onClick="showDetails($1)" 
+			onClick="showDisposisi($1)" 
 			id="detail" 
-			data-tooltip="tooltip" 
-			data-placement="left" 
+			data-keyboard="false" 
+			data-backdrop="static"
 			title="Detail">
 			Disposisi</button>
 			', 

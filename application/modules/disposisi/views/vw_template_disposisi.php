@@ -45,10 +45,9 @@
 
 	</style>
 </head>
-<body">
+<body onload="window.print()">
 	<div class="print_area">
-		<p style="font-weight: bold">PENGADILAN TINGGI PEKANBARU</p>
-		<p style="font-weight: bold">DI PEKANBARU</p>
+		<p style="font-weight: bold">PENGADILAN TINGGI PEKANBARU <br> DI PEKANBARU</p>
 
 
 		<table  class="satu">
@@ -111,7 +110,7 @@
 				</tr>
 				<tr>
 					<td><span>Paraf</span> : </td>
-					<td><span>Catatan</span> : </td>
+					<td><span>Catatan</span> : <?php echo $data_disposisi['catatan_tambahan'] ?></td>
 					
 				</tr>
 			</table>

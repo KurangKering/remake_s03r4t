@@ -105,7 +105,7 @@ class Users extends MY_Controller {
 	}
 
 
-	public function ubah($id == null)
+	public function ubah($id = null)
 	{
 		$this->template->title("Ubah | Users");
 		$this->template->append_metadata('<link href="'. base_url("themes/inspinia/css/plugins/iCheck/custom.css").'" rel="stylesheet">');
