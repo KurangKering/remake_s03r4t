@@ -58,13 +58,13 @@
           </label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select name="disposisi_tujuan_id" class="form-control">
-              <?php foreach ($tujuan_disposisi as $key => $value): ?>
+              <?php foreach ($disposisi_tujuan as $key => $value): ?>
                 <?php if ($value['id'] == $surat_masuk['disposisi_tujuan_id']): ?>
                   <?php $selected = 'selected'; ?>
                 <?php else: ?>
                   <?php $selected = ''; ?>
                 <?php endif ?>
-                <option value="<?php echo $value['id'] ?>" <?php echo $selected ?> ><?php echo $value['nama']?></option>             
+                <option value="<?php echo $value['id'] ?>" <?php echo $selected ?> ><?php echo $value['name']?></option>             
               <?php endforeach ?>
             </select>
             <!--  <input id="diposisi_tujuan" name="diposisi_tujuan"   class="form-control" type="text"> -->

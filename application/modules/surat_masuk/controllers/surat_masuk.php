@@ -12,7 +12,7 @@ class Surat_masuk extends MY_Controller {
 
 	public function dummy()
 	{
-		$itemDisposisi = $this->md_surat_masuk->select_data_disposisi(17);
+		$itemDisposisi = $this->md_surat_masuk->ref_eselon();
 		debug($itemDisposisi);
 	}
 	public function index()
@@ -89,8 +89,8 @@ class Surat_masuk extends MY_Controller {
 			if (validation_errors() != false) {
 				$data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors());
 			}
-			$data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
-
+			//$data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
+			$data['disposisi_tujuan'] = $this->md_surat_masuk->ref_eselon();
 			$this->template->append_metadata('<link href="'. base_url("themes/inspinia/css/plugins/iCheck/custom.css").'" rel="stylesheet">');
 
 			$this->template->append_metadata('<script src="'. base_url("themes/inspinia/js/plugins/iCheck/icheck.min.js") . '"></script>');
@@ -181,7 +181,9 @@ class Surat_masuk extends MY_Controller {
 			else {
 
 				$surat_masuk = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
-				$data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
+				// $data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
+				$data['disposisi_tujuan'] = $this->md_surat_masuk->ref_eselon();
+
 				$data['surat_masuk'] = $surat_masuk;
 				$this->template->build('vw_ubah', $data);
 			}  
@@ -191,7 +193,8 @@ class Surat_masuk extends MY_Controller {
 		{
 			validation_errors() != false ? $data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors()) : '';
 			$data['surat_masuk'] = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
-			$data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
+			$data['disposisi_tujuan'] = $this->md_surat_masuk->ref_eselon();
+			// $data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
 			$this->template->build('vw_ubah', $data);
 		}
 
@@ -242,7 +245,7 @@ class Surat_masuk extends MY_Controller {
 			$table 	  .= "<tr><td>Ditujukan Kepada</td><td>".$data['tujuan_text']."</td></tr>";	
 			$table 	  .= "<tr><td>Pengirim Surat</td><td>".$data['pengirim']."</td></tr>";	
 			$table 	  .= "<tr><td>Perihal</td><td>".$data['perihal']."</td></tr>";	
-			$table 	  .= "<tr><td>Disposisi Tujuan</td><td>".$data['eselon_nama']."</td></tr>";	
+			$table 	  .= "<tr><td>Disposisi Tujuan</td><td>".$data['name']."</td></tr>";	
 			$table 	  .= "<tr><td>Status</td><td>".$data['tahap_nama']."</td></tr>";	
 			
 			$table 	  .= "<tr><td>Catatan Tambahan</td><td>".$data['catatan_tambahan']."</td></tr>";	

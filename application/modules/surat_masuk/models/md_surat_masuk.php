@@ -11,6 +11,15 @@ class Md_Surat_masuk extends CI_Model {
 		//Do your magic here
 	}	
 
+	public function ref_eselon()
+	{
+		$this->db->select('name');
+		$this->db->select('id');
+		$this->db->from('sys_groups');
+		$this->db->where_in('id', array('70','80','90','100', '110', '120', '130', '140'));
+		return $this->db->get()->result_array() ;
+
+	}
 	public function select_tahapan_proses()
 	{
 		$tahapan_proses = $this->md_Global->get_data_all('ref_tahapan_proses');
@@ -29,11 +38,10 @@ class Md_Surat_masuk extends CI_Model {
 			surat_masuk.*, 
 			ref_tahapan_proses.*, 
 			ref_tahapan_proses.nama as tahap_nama , 
-			ref_eselon.*, 
-			ref_eselon.nama as eselon_nama 
+			sys_groups.name
 			FROM surat_masuk 
 			join ref_tahapan_proses on surat_masuk.status_id = ref_tahapan_proses.id 
-			join ref_eselon on surat_masuk.disposisi_tujuan_id = ref_eselon.id 
+			join sys_groups on surat_masuk.disposisi_tujuan_id = sys_groups.id 
 			where id_surat_masuk = ?
 			';
 			return $this->db->query($sql, array($id))->row_array();

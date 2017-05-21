@@ -60,8 +60,8 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select name="disposisi_tujuan_id" class="form-control">
-                <?php foreach ($tujuan_disposisi as $key => $tujuan): ?>
-                  <option value="<?php echo $tujuan['id'] ?>"><?php echo $tujuan['nama'] ?></option>             
+                <?php foreach ($disposisi_tujuan as $key => $tujuan): ?>
+                  <option value="<?php echo $tujuan['id'] ?>"><?php echo $tujuan['name'] ?></option>             
                 <?php endforeach ?>
               </select>
               <!--  <input id="diposisi_tujuan" name="diposisi_tujuan"   class="form-control" type="text"> -->

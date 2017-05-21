@@ -43,5 +43,12 @@ $config['surat_arsip']['status']['3'] = 'Hilang';
 $config['disposisi']['tahap']['1'] = array('10'); 
 $config['disposisi']['tahap']['2'] = array('30', '40'); 
 $config['disposisi']['tahap']['3'] = array('50', '60');
-$config['disposisi']['tahap']['4'] = array('70', '80', '90', '100'); 
+$config['disposisi']['tahap']['4'] = array('70', '80', '90', '100');
+
+$config['ref_eselon']['70'] = 'Kasubbag Rencana Program Dan Anggaran';
+$config['ref_eselon']['70'] = 'Kepala Sub Bagian Kepegawaian Dan Teknologi Informasi';
+$config['ref_eselon']['70'] = 'Kepala Sub Bagian Tatausaha Dan Rumah Tangga';
+$config['ref_eselon']['70'] = 'Kepala Sub Bagian Keuangan Dan Pelaporan';
+
+
 
