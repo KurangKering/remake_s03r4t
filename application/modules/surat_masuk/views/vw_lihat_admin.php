@@ -21,7 +21,81 @@
     </div>
 </div>
 <!-- Modal details surat masuk -->
-<div class="modal fade surat-keluar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_detail">
+<div class="modal fade surat-keluar" aria-hidden="true" id="modal_disposisi">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1"> Data Surat Masuk</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Form Disposisi</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div id="tab_surat_masuk">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div id="semua_disposisi">
+
+                                        </div>
+
+                                        <div id="body_disposisi">
+                                         <div class="row">
+                                             <div class="col-md-12">
+                                                <form id="frm_disposisi" data-parsley-validate class="form-horizontal">
+                                                    <fieldset>
+                                                        <h3 id="label_tahap_disposisi"></h3>
+                                                        <input type="hidden" name="id_surat_masuk" id="id_surat_masuk"> 
+                                                        <input type="hidden" name="disposisi_dari_id" id="disposisi_dari_id"> 
+                                                        <input type="hidden" name="tahapan_disposisi" id="tahapan_disposisi"> 
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="disposisi_dari_text">Dari
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input id="disposisi_dari_text" class="form-control" name="disposisi_dari_text" readonly="" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="isi_disposisi">Isi Disposisi</label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <textarea id="isi_disposisi" name="isi_disposisi"   required="" class="form-control"> </textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ln_solid"></div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-6 col-md-offset-3">
+                                                                <button id="send" type="submit" onclick="doDisposisi()"  class="btn btn-primay">Disposisi</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </fieldset>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal details surat masuk -->
+<div class="modal fade surat-keluar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal_bersama">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
@@ -88,7 +162,7 @@
             {"data": "tgl_masuk"},
             {"data": "pengirim"},
             {"data": "detail_perihal", "orderable" : false},
-            {"data": "status_nama"},
+            {"data": "status", "orderable" : false},
             {"data": "view", "orderable" : false},
             ],
             order: [[1, 'desc']],
@@ -122,9 +196,9 @@
             dataType: 'html',
             success: function(data, textStatus, jqXHR)
             {
-                $('#modal_detail  .modal-body').html('');
-                $('#modal_detail  .modal-body').html(data);
-                $("#modal_detail").modal("show");
+                $('#modal_bersama  .modal-body').html('');
+                $('#modal_bersama  .modal-body').html(data);
+                $("#modal_bersama").modal("show");
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -135,7 +209,7 @@
     function doDelete(id)
     {
         $.ajax({
-            url: 'surat_masuk/ajax_delete_surat_masuk',
+            url: '<?php echo base_url('surat_masuk/ajax_delete_surat_masuk'); ?>',
             type: 'POST',
             data: {id_surat_masuk : id},
             success: function(data, textStatus, jqXHR)
@@ -152,8 +226,31 @@
     {
         $("<iframe>")                           
         .hide()                             
-        .attr("src", "<?php echo base_url('disposisi/cetak/') ?>" + id) 
+        .attr("src", "<?php echo base_url('surat_masuk/cetak_disposisi/'); ?>" + id) 
         .appendTo("body");                 
         return false;
     }
+    function showDisposisi(id)
+   
+
+function showStatusDisposisi(id)
+{
+   $.ajax({
+    url: '<?php echo base_url('surat_masuk/showStatusDisposisi/'); ?>',
+    type: 'POST',
+    data: {id_surat_masuk : id, type : 'show'},
+    cache: false,
+    dataType: 'html',
+    success: function(data, textStatus, jqXHR)
+    {
+     $('#modal_bersama  .modal-body').html('');
+     $('#modal_bersama  .modal-body').html(data);
+     $("#modal_bersama").modal("show");
+ },
+ error: function(jqXHR, textStatus, errorThrown)
+ {
+    console.log('ERRORS: ' + textStatus);
+}
+});
+}
 </script>

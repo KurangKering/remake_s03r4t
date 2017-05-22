@@ -13,7 +13,9 @@
 
     <link href="<?php echo base_url('themes/inspinia/'); ?>css/animate.css" rel="stylesheet">
     <link href="<?php echo base_url('themes/inspinia/'); ?>css/style.css" rel="stylesheet">
+    <style>
 
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -23,7 +25,7 @@
             <div>
 
                 <!-- <h1 class="logo-name">IN+</h1> -->
-                <img src="<?php echo base_url(); ?>/assets/images/logo_pn.png" width="250px" class="logo-name">
+                <img src="<?php echo base_url(); ?>/assets/images/logo_pn.png" width="200px" class="logo-name">
 
             </div>
             <h3>Sistem Informasi Persuratan</h3>
@@ -36,10 +38,10 @@
                     <input type="password" name="password" class="form-control" placeholder="Password" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-                <p class="text-right">
+               <!--  <p class="text-right">
                     <label for="remember">Remember Me:</label>    <input type="checkbox" name="remember" value="1"  id="remember" />
-                </p>
-                <?php echo $message ?>
+                </p> -->
+                <?php echo isset($message) ? $message : ''  ?>
                 <a href="#"><small>Lupa password?</small></a>
 
                 <!-- <p class="text-muted text-center"><small>Do not have an account?</small></p> -->

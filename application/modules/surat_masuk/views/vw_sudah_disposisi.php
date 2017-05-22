@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-content">
-                <table id="tbl_masuk" class="table table-striped">
+                <table id="tbl_sudah_disposisi" class="table table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -47,8 +47,8 @@
                                         </div>
 
                                         <div id="body_disposisi">
-                                         <div class="row">
-                                             <div class="col-md-12">
+                                           <div class="row">
+                                               <div class="col-md-12">
                                                 <form id="frm_disposisi" data-parsley-validate class="form-horizontal">
                                                     <fieldset>
                                                         <h3 id="label_tahap_disposisi"></h3>
@@ -138,10 +138,10 @@
             };
         };
 
-        t = $("#tbl_masuk").dataTable({
+        t = $("#tbl_sudah_disposisi").dataTable({
             initComplete: function() {
                 var api = this.api();
-                $('#tbl_masuk_filter input')
+                $('#tbl_sudah_disposisi_filter input')
                 .off('.DT')
                 .on('keyup.DT', function(e) {
                     if (e.keyCode == 13) {
@@ -154,7 +154,7 @@
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "<?php echo base_url('surat_masuk/ajax_lihat'); ?>", "type": "POST"},
+            ajax: {"url": "<?php echo base_url('surat_masuk/ajax_grid_sudah_disposisi'); ?>", "type": "POST"},
             columns: [
             {"data" : "nomor_urut" ,
             "orderable": false},
@@ -206,22 +206,6 @@
             }
         });
     }
-    function doDelete(id)
-    {
-        $.ajax({
-            url: '<?php echo base_url('surat_masuk/ajax_delete_surat_masuk'); ?>',
-            type: 'POST',
-            data: {id_surat_masuk : id},
-            success: function(data, textStatus, jqXHR)
-            {
-                t.api().ajax.reload();
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                console.log('ERRORS: ' + textStatus);
-            }
-        });
-    }
     function loadAnoterPage(id)
     {
         $("<iframe>")                           
@@ -232,7 +216,7 @@
     }
     function showDisposisi(id)
     {
-       $.ajax({
+     $.ajax({
         url: '<?php echo base_url('surat_masuk/modalDisposisi'); ?>',
         type: 'POST',
         data: {id_surat_masuk : id},
@@ -265,9 +249,9 @@
             console.log('ERRORS: ' + textStatus);
         }
     });
-   }
+ }
 
-   function doDisposisi() {
+ function doDisposisi() {
     $('#frm_disposisi').on('submit', function(e){
         e.preventDefault();
         $.ajax({
@@ -275,19 +259,19 @@
             type: 'POST',
             data: $('#frm_disposisi').serialize(),
             success: function(data){
-             if (data == 'OK') {
-                 t.api().ajax.reload();
-                $("#modal_disposisi").modal("hide");
+               if (data == 'OK') {
+                   t.api().ajax.reload();
+                   $("#modal_disposisi").modal("hide");
 
-            }
-        }
-    });
+               }
+           }
+       });
     });
 }
 
 function showStatusDisposisi(id)
 {
-   $.ajax({
+ $.ajax({
     url: '<?php echo base_url('surat_masuk/showStatusDisposisi/'); ?>',
     type: 'POST',
     data: {id_surat_masuk : id, type : 'show'},
@@ -295,14 +279,71 @@ function showStatusDisposisi(id)
     dataType: 'html',
     success: function(data, textStatus, jqXHR)
     {
-     $('#modal_bersama  .modal-body').html('');
-     $('#modal_bersama  .modal-body').html(data);
-     $("#modal_bersama").modal("show");
- },
- error: function(jqXHR, textStatus, errorThrown)
- {
+       $('#modal_bersama  .modal-body').html('');
+       $('#modal_bersama  .modal-body').html(data);
+       $("#modal_bersama").modal("show");
+   },
+   error: function(jqXHR, textStatus, errorThrown)
+   {
     console.log('ERRORS: ' + textStatus);
 }
 });
 }
+
+
+function ShowubahDisposisi(id)
+{
+ $.ajax({
+    url: '<?php echo base_url('surat_masuk/showModalUbahDisposisi'); ?>',
+    type: 'POST',
+    data: {id_surat_masuk : id},
+    cache: false,
+    dataType: 'json',
+    success: function(data, textStatus, jqXHR)
+    {
+        $('#tab_surat_masuk').html('');
+        $('#semua_disposisi ').html('');
+        $('#body_disposisi #id_surat_masuk').val('');
+        $('#body_disposisi #disposisi_dari_id').val('');
+        $('#body_disposisi #disposisi_dari_text').val('');
+        $('#body_disposisi #isi_disposisi').val('');
+        $('#body_disposisi #tahapan_disposisi').val('');
+        $('#body_disposisi #label_tahap_disposisi').text('');
+
+        console.log(data.itemDisposisi);
+        $('#tab_surat_masuk').html(data.table);
+        $('#semua_disposisi ').html(data.itemDisposisi);
+        $('#body_disposisi #id_surat_masuk').val(data.id_surat_masuk);
+        $('#body_disposisi #disposisi_dari_id').val(data.pemberi_disposisi);
+        $('#body_disposisi #disposisi_dari_text').val(data.disposisi_dari_text);
+        $('#body_disposisi #tahapan_disposisi').val(data.tahapan_disposisi);
+        $('#body_disposisi #label_tahap_disposisi').text('Ubah Data Disposisi Tahap ' + data.tahapan_disposisi);
+
+        $("#modal_disposisi").modal("show");
+    },
+    error: function(jqXHR, textStatus, errorThrown)
+    {
+        console.log('ERRORS: ' + textStatus);
+    }
+});
+}
+
+function doDisposisi() {
+    $('#frm_disposisi').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '<?php echo base_url('surat_masuk/doDisposisi'); ?>', 
+            type: 'POST',
+            data: $('#frm_disposisi').serialize(),
+            success: function(data){
+               if (data == 'OK') {
+                   t.api().ajax.reload();
+                   $("#modal_disposisi").modal("hide");
+
+               }
+           }
+       });
+    });
+}
+
 </script>

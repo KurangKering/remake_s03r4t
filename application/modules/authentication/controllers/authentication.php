@@ -47,6 +47,8 @@ class Authentication extends CI_Controller {
 				// if the login was un-successful
 				// redirect them back to the login page
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
+				$data['message'] = showNotificationInspinia('danger', validation_errors());
+
 				redirect('login'); // use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		}
@@ -54,7 +56,8 @@ class Authentication extends CI_Controller {
 		{
 			// the user is not logging in so display the login page
 			// set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+			$this->data['message'] = (validation_errors()) ? showNotificationInspinia('danger', validation_errors()) : '';
+			$this->data['message'] = $this->session->flashdata('message') ? showNotificationInspinia('danger', $this->session->flashdata('message')) : '';
 
 			$this->data['identity'] = array('name' => 'identity',
 				'id'    => 'identity',

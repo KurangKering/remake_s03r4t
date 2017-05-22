@@ -56,11 +56,11 @@
 			</tr>
 			<tr>
 				
-				<td width="38%"><span>Indeks</span> &ensp;&ensp;&ensp;&ensp;: <?php echo $data_disposisi['tujuan_id'] ?>
+				<td width="38%"><span>Indeks</span> &ensp;&ensp;&ensp;&ensp;: <?php echo $data_disposisi[0]['tujuan_id'] ?>
 				</td>
 				<td width="28%"><span>Tgl</span> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;: <?php echo date('d-m-Y'); ?>
 					<br> 
-					No. Urut &emsp;: <?php echo $data_disposisi['id_surat_masuk'] ?>
+					No. Urut &emsp;: <?php echo $data_disposisi[0]['id_surat_masuk'] ?>
 				</td>
 				<td style="text-align: center"><span>Kode</span> :  <br>
 					OT/HM/KP/KU/KS/PL/HK/PP/PB/PS
@@ -68,7 +68,7 @@
 			</tr>
 			<tr>
 				<td style="height: 50px;  vertical-align: text-top;" colspan="3">
-					<span>Isi Ringkas</span> &ensp;: <?php echo $data_disposisi['perihal'] ?>
+					<span>Isi Ringkas</span> &ensp;: <?php echo $data_disposisi[0]['perihal'] ?>
 				</td>
 			</tr>
 
@@ -77,18 +77,18 @@
 
 				<tr>
 					<td style="border-top: none">
-						<span>Dari</span> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;: <?php echo $data_disposisi['pengirim'] ?>
+						<span>Dari</span> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;: <?php echo $data_disposisi[0]['pengirim'] ?>
 					</td>
 					<td style="border-top: none">
-						<span>Kepada</span> &ensp;&ensp;: <?php echo $data_disposisi['disposisi_tujuan_id'] ?>
+						<span>Kepada</span> &ensp;&ensp;: <?php echo $data_disposisi[0]['disposisi_tujuan_id'] ?>
 					</td>
 				</tr>
 				<tr>
 					<td style="border-top: none">
-						<span>Tanggal</span> &ensp;&ensp;&ensp;&nbsp;: <?php echo $data_disposisi['tgl_masuk'] ?>
+						<span>Tanggal</span> &ensp;&ensp;&ensp;&nbsp;: <?php echo $data_disposisi[0]['tgl_masuk'] ?>
 					</td>
 					<td style="border-top: none">
-						<span>No. Surat</span> &nbsp;: <?php echo $data_disposisi['no_lembar_disposisi'] ?>
+						<span>No. Surat</span> &nbsp;: <?php echo $data_disposisi[0]['no_lembar_disposisi'] ?>
 					</td>
 				</tr>
 				<tr>
@@ -98,19 +98,39 @@
 
 				</tr>
 				<tr>
-					<td style="border-top: none; height: 250px; vertical-align: text-top; text-align: center">
+					<td style="border-top: none; border-bottom: none; vertical-align: text-top; text-align: center">
 						<span style="font-size: 14px; font-weight: bold; text-decoration: underline">KETUA PENGADILAN TINGGI PEKANBARU</span>
-
 					</td>
-					<td style="border-top: none; height: 250px; vertical-align: text-top; text-align: center">
+					<td style="border-top: none; border-bottom: none; vertical-align: text-top; text-align: center">
 						<span style="font-size: 14px; font-weight: bold; text-decoration: underline">PANITERA / SEKRETARIS</span>
 
 					</td>
 					
 				</tr>
+				<div>
+					
+
+					<tr >
+					<td rowspan="2" style="height: 200px; border-top: none; vertical-align: text-top; text-align: center; ">
+							<span style="font-size: 14px; "><?php echo $isi_satu?></span>
+						</td>
+						<td style="border-top: none; height: 100px; vertical-align: text-top; text-align: center">
+							<span style="font-size: 14px;  "><?php echo $isi_dua ?></span>
+
+						</td>
+
+					</tr>
+					<tr>
+						<td style="border-top: none; height: 100px; vertical-align: text-top; text-align: center">
+							<span style="font-size: 14px; "><?php echo $isi_tiga ?></span>
+
+						</td>
+
+					</tr>
+				</div>
 				<tr>
 					<td><span>Paraf</span> : </td>
-					<td><span>Catatan</span> : <?php echo $data_disposisi['catatan_tambahan'] ?></td>
+					<td><span>Catatan</span> : <?php echo $data_disposisi[0]['catatan_tambahan'] ?></td>
 					
 				</tr>
 			</table>

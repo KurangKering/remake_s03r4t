@@ -10,7 +10,20 @@ class Md_Surat_masuk extends CI_Model {
 		parent::__construct();
 		//Do your magic here
 	}	
-
+	public function data_cetak_disposisi($id)
+	{
+		$sql = 'SELECT surat_masuk.*, 
+		surat_disposisi.tahapan_disposisi, 
+		surat_disposisi.isi_disposisi 
+		FROM surat_masuk  
+		join surat_disposisi 
+		on surat_masuk.id_surat_masuk = surat_disposisi.id_surat_masuk 
+		WHERE surat_masuk.id_surat_masuk = ?
+		GROUP BY tahapan_disposisi 
+		ORDER BY  tahapan_disposisi
+		';
+		return $this->db->query($sql, array($id)) ? $this->db->query($sql, array($id))->result_array() : array();
+	}
 	public function ref_eselon()
 	{
 		$this->db->select('name');
@@ -213,6 +226,61 @@ class Md_Surat_masuk extends CI_Model {
 		';
 		return $this->db->query($sql, array($id))->result_array();
 	}
+
+
+
+	public function json_select_sudah_disposisi( $id_user)
+	{
+		
+		$this->datatables->select('
+			surat_masuk.id_surat_masuk, 
+			no_lembar_disposisi, 
+			DATE_FORMAT(tgl_masuk, "%d/%m/%Y") as tgl_masuk, 
+			pengirim, 
+			perihal, 
+			tujuan_text, 
+			ref_tahapan_proses.nama as status_nama
+			')
+		->from('surat_masuk')
+		->join('ref_tahapan_proses', 'surat_masuk.status_id = ref_tahapan_proses.id')
+		->join('surat_disposisi', 'surat_disposisi.id_surat_masuk = surat_masuk.id_surat_masuk')
+		->where('surat_disposisi.disposisi_dari_id', $id_user )
+		->group_by('surat_masuk.id_surat_masuk')
+		->add_column('nomor_urut', '0')
+		->add_column(
+			'detail_perihal',
+			'<a href="#" onClick="showDetails($1)">$2</a>',
+			'id_surat_masuk,perihal'
+			)
+		->add_column(
+			'status',
+			'<button 
+			class="btn btn-default btn-md" 
+			onClick="showStatusDisposisi($1)" 
+			id="detail" 
+			data-keyboard="false" 
+			data-backdrop="static"
+			title="Detail">
+			$2</button>',
+			'id_surat_masuk,status_nama'
+			)
+		->add_column(
+			'view', 
+			'
+			<button 
+			class="btn btn-default btn-md" 
+			onClick="ShowubahDisposisi($1)" 
+			id="detail" 
+			data-keyboard="false" 
+			data-backdrop="static"
+			title="Detail">
+			Ubah</button>
+			', 
+			'id_surat_masuk');
+
+		return $this->datatables->generate();
+	}
+
 
 }
 
