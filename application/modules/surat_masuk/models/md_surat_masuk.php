@@ -252,6 +252,7 @@ class Md_Surat_masuk extends CI_Model {
 			'<a href="#" onClick="showDetails($1)">$2</a>',
 			'id_surat_masuk,perihal'
 			)
+
 		->add_column(
 			'status',
 			'<button 
@@ -264,6 +265,20 @@ class Md_Surat_masuk extends CI_Model {
 			$2</button>',
 			'id_surat_masuk,status_nama'
 			)
+		->add_column(
+			'view_cetak', 
+			'
+			<button 
+			class="btn btn-default btn-md" 
+			onClick="loadAnoterPage($1)" 
+			id="detail" 
+			data-tooltip="tooltip" 
+			data-placement="left" 
+			title="Cetak Disposisi">
+			<i class="fa fa-print" aria-hidden="true"></i></button>
+
+		', 
+			'id_surat_masuk')
 		->add_column(
 			'view', 
 			'

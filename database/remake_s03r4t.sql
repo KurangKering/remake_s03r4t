@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
--- HeidiSQL Version:             9.4.0.5169
+-- HeidiSQL Version:             9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -213,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `surat_disposisi` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_surat_masuk_tahapan_disposisi` (`id_surat_masuk`,`tahapan_disposisi`),
   CONSTRAINT `FK_surat_disposisi_surat_masuk` FOREIGN KEY (`id_surat_masuk`) REFERENCES `surat_masuk` (`id_surat_masuk`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table remake_s03r4t.surat_disposisi: ~5 rows (approximately)
 DELETE FROM `surat_disposisi`;
@@ -258,13 +258,13 @@ CREATE TABLE IF NOT EXISTS `surat_keluar` (
 DELETE FROM `surat_keluar`;
 /*!40000 ALTER TABLE `surat_keluar` DISABLE KEYS */;
 INSERT INTO `surat_keluar` (`id_surat_keluar`, `no_surat_keluar`, `jenis_surat_keluar_id`, `tgl_surat`, `tujuan_id`, `tujuan_text`, `perihal`, `file`, `path_file`, `dikirim_via`, `no_resi_pengiriman`, `tanggal_pengiriman`, `catatan_tambahan`, `status_surat_id`, `status_surat`, `pembuat_surat_id`, `pembuat_surat_text`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
-	(2, 2, 1, '2222-02-02', 1, 'Internal', '2', '', _binary '', '1', '2', '0000-00-00', NULL, NULL, NULL, 2, '22', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
-	(7, 1231, 1, '2017-01-01', 1, 'Internal', '2112', '', _binary '', '1', '21312312', '2018-10-01', NULL, NULL, 'Register', 21, '211', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
-	(8, 111, 1, '2019-01-01', 1, 'Internal', '2', '09221cddbb9a2913542c03c29f0a83b4.pdf', _binary '', '1', '2', '2019-01-01', NULL, 1, 'Register', 2, '2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
-	(9, 1, 1, '2017-05-17', 1, 'Internal', '123', 'b55259a42d718cb5fae6d7e01367de60.pdf', _binary '', '1', '123', '2017-05-17', NULL, 1, 'Register', 123, '123', 'administrator', '2017-05-17 14:49:24', 'administrator', '2017-05-17 14:51:55'),
-	(10, 1222, 1, '2017-05-17', 1, 'Internal', '2131', '', _binary '', '1', '1231', '2017-05-17', NULL, 1, 'Register', 1231, '12312', 'administrator', '2017-05-17 18:23:21', 'administrator', '2017-05-17 20:04:42'),
-	(11, 12312, 1, '2017-05-17', 1, 'Internal', '131', '', _binary '', '1', '12312', '2017-05-17', NULL, 1, 'Register', 13, '1231', 'administrator', '2017-05-17 19:55:03', NULL, NULL),
-	(15, 1231322, 1, '2017-05-17', 1, 'Internal', '12313', '', _binary '', '1', '2311', '2017-05-17', NULL, 1, 'Register', 1, 'administrator', 'administrator', '2017-05-17 20:04:24', NULL, NULL);
+	(2, 2, 1, '2222-02-02', 1, 'Internal', '2', '', '', '1', '2', '0000-00-00', NULL, NULL, NULL, 2, '22', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
+	(7, 1231, 1, '2017-01-01', 1, 'Internal', '2112', '', '', '1', '21312312', '2018-10-01', NULL, NULL, 'Register', 21, '211', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
+	(8, 111, 1, '2019-01-01', 1, 'Internal', '2', '09221cddbb9a2913542c03c29f0a83b4.pdf', '', '1', '2', '2019-01-01', NULL, 1, 'Register', 2, '2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00'),
+	(9, 1, 1, '2017-05-17', 1, 'Internal', '123', 'b55259a42d718cb5fae6d7e01367de60.pdf', '', '1', '123', '2017-05-17', NULL, 1, 'Register', 123, '123', 'administrator', '2017-05-17 14:49:24', 'administrator', '2017-05-17 14:51:55'),
+	(10, 1222, 1, '2017-05-17', 1, 'Internal', '2131', '', '', '1', '1231', '2017-05-17', NULL, 1, 'Register', 1231, '12312', 'administrator', '2017-05-17 18:23:21', 'administrator', '2017-05-17 20:04:42'),
+	(11, 12312, 1, '2017-05-17', 1, 'Internal', '131', '', '', '1', '12312', '2017-05-17', NULL, 1, 'Register', 13, '1231', 'administrator', '2017-05-17 19:55:03', NULL, NULL),
+	(15, 1231322, 1, '2017-05-17', 1, 'Internal', '12313', '', '', '1', '2311', '2017-05-17', NULL, 1, 'Register', 1, 'administrator', 'administrator', '2017-05-17 20:04:24', NULL, NULL);
 /*!40000 ALTER TABLE `surat_keluar` ENABLE KEYS */;
 
 -- Dumping structure for table remake_s03r4t.surat_masuk
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `surat_masuk` (
   `modified_on` datetime DEFAULT NULL COMMENT 'Diperbaharui Tanggal: (by system)',
   PRIMARY KEY (`id_surat_masuk`),
   UNIQUE KEY `no_lembar_disposisi` (`no_lembar_disposisi`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table remake_s03r4t.surat_masuk: ~3 rows (approximately)
 DELETE FROM `surat_masuk`;
@@ -655,8 +655,8 @@ CREATE TABLE IF NOT EXISTS `sys_users` (
 DELETE FROM `sys_users`;
 /*!40000 ALTER TABLE `sys_users` DISABLE KEYS */;
 INSERT INTO `sys_users` (`id`, `ip_address`, `fullname`, `username`, `password`, `salt`, `old_password`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `active`, `first_name`, `last_name`, `company`, `phone`, `alternative_email`, `allow_concurrent_login`, `has_change_password`, `enable_change_password`, `last_change_password`, `password_expired_remainder`, `attemp_count`, `attemp_time`, `user_expired`, `last_login`, `block`, `code_activation`, `params`, `lock_by`, `lock_on`, `created_by`, `created_on`, `modified_by`, `modified_on`) VALUES
-	(1, '127.0.0.1', 'Admin', 'administrator', '$2y$08$HSZjHc9PC6yNSVUv5tMs1OuwBvFDz5qedPPPSHWvKdxmgBgszLNAC', '', '', 'admin@admin.com', '', NULL, NULL, 'mIJgjwdK1.q/AlDojhepte', 1, 'Admin', 'istrator', 'ADMIN', '076123456', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495411676, 0, NULL, '', '', NULL, NULL, 1268889823, NULL, NULL),
-	(2, '::1', 'Ketua', 'ketua', '$2y$08$2Jqoc2LfNeT/zhECQqfJHeCHiToZQU0gjErtqfTPurGON9gEP4KMS', '', '', 'asdf@adfasd.com', NULL, '', NULL, NULL, 1, 'Ketua', 'Wakil', '21', 'saf', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495411654, 0, NULL, '', '', NULL, NULL, 1494502784, NULL, NULL),
+	(1, '127.0.0.1', 'Admin', 'administrator', '$2y$08$HSZjHc9PC6yNSVUv5tMs1OuwBvFDz5qedPPPSHWvKdxmgBgszLNAC', '', '', 'admin@admin.com', '', NULL, NULL, 'mIJgjwdK1.q/AlDojhepte', 1, 'Admin', 'istrator', 'ADMIN', '076123456', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495438350, 0, NULL, '', '', NULL, NULL, 1268889823, NULL, NULL),
+	(2, '::1', 'Ketua', 'ketua', '$2y$08$2Jqoc2LfNeT/zhECQqfJHeCHiToZQU0gjErtqfTPurGON9gEP4KMS', '', '', 'asdf@adfasd.com', NULL, '', NULL, NULL, 1, 'Ketua', 'Wakil', '21', 'saf', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495438984, 0, NULL, '', '', NULL, NULL, 1494502784, NULL, NULL),
 	(4, '::1', 'Sekretaris', 'sekretaris', '$2y$08$ynW/tsgzgx24qz01N6Uy5.1Eh0c/e6KA4VJVG8jb0fNf2zTjMUWMO', '', '', 'sekretaris@gmail.com', '', '', NULL, NULL, 1, 'Sekretaris', 'Tarisss', 'mewmew', '0000', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495376044, 0, NULL, '', '', NULL, NULL, 1494925841, NULL, NULL),
 	(5, '::1', 'Umum', 'umum', '$2y$08$GVKqCGsqc4jlN6OV3HbFUe38RIyGcRDPDzoATkx1UgDBzivp6nu2e', '', '', 'uu@gmail.com', '', '', NULL, NULL, 2, 'kabag', 'Umum', 'uuum', '123123', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, 1495408883, 0, NULL, '', '', NULL, NULL, 1494925886, NULL, NULL),
 	(6, '::1', 'msdfs', 'cicak', '$2y$08$r0zmGPkWJBigYzfrIvBMA.fYWGoACFQk/qsTwuH662Vx7gCI03THy', '', '', 'ads@asd.com', '', '', NULL, NULL, 1, '', '', '', '0000', '', -1, 0, 1, NULL, -1, 0, NULL, NULL, NULL, 0, NULL, '', '', NULL, NULL, 1495026737, NULL, NULL),

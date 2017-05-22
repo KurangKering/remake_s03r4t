@@ -56,7 +56,7 @@
 			</tr>
 			<tr>
 				
-				<td width="38%"><span>Indeks</span> &ensp;&ensp;&ensp;&ensp;: <?php echo $data_disposisi[0]['tujuan_id'] ?>
+				<td width="38%"><span>Indeks</span> &ensp;&ensp;&ensp;&ensp;: <?php echo $data_disposisi[0]['disposisi_tujuan_id'] ?>
 				</td>
 				<td width="28%"><span>Tgl</span> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;: <?php echo date('d-m-Y'); ?>
 					<br> 
@@ -80,7 +80,7 @@
 						<span>Dari</span> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;: <?php echo $data_disposisi[0]['pengirim'] ?>
 					</td>
 					<td style="border-top: none">
-						<span>Kepada</span> &ensp;&ensp;: <?php echo $data_disposisi[0]['disposisi_tujuan_id'] ?>
+						<span>Kepada</span> &ensp;&ensp;: <?php echo $tujuan_disposisi; ?>
 					</td>
 				</tr>
 				<tr>

@@ -252,6 +252,8 @@ class Surat_masuk extends MY_Controller {
 		}
 		// $data['data_disposisi'] = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
 		$data['data_disposisi'] = $this->md_surat_masuk->data_cetak_disposisi($id);
+		$data['tujuan_disposisi'] = $this->md_Global->get_data_single('sys_groups', array('id' => $data['data_disposisi'][0]['disposisi_tujuan_id']))['name'];
+
 		$data['isi_satu'] = isset($data['data_disposisi'][0]['isi_disposisi']) ? $data['data_disposisi'][0]['isi_disposisi'] : '';
 		$data['isi_dua'] = isset($data['data_disposisi'][1]['isi_disposisi']) ? $data['data_disposisi'][1]['isi_disposisi'] : '';
 		$data['isi_tiga'] = isset($data['data_disposisi'][2]['isi_disposisi']) ? $data['data_disposisi'][2]['isi_disposisi'] : '';
