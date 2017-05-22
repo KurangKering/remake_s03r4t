@@ -73,27 +73,53 @@ if ( ! function_exists('recursive'))
 if ( ! function_exists('showNotificationToastr'))
 {
 
-	function showNotificationToastr($typeOfMessage,$message)
+	function showNotificationToastr($typeOfMessage,$message, $type = "script")
 	{
-		$toastr = '<script>';
-		$toastr .= 'toastr.options = {';
-		$toastr .= '	"closeButton": false,';
-		$toastr .= '	"debug": false,';
-		$toastr .= '	"newestOnTop": false,';
-		$toastr .= '	"progressBar": false,';
-		$toastr .= '	"positionClass": "toast-top-center",';
-		$toastr .= '	"preventDuplicates": true,';
-		$toastr .= '	"onclick": null,';
-		$toastr .= '	"showDuration": "0",';
-		$toastr .= '	"hideDuration": "0",';
-		$toastr .= '	"timeOut": "1000",';
-		$toastr .= '	"extendedTimeOut": "0",';
-		$toastr .= '	"showEasing": "swing",';
-		$toastr .= '	"hideEasing": "linear",';
-		$toastr .= '	"showMethod": "fadeIn",';
-		$toastr .= '	"hideMethod": "fadeOut" },';
-		$toastr .= '	toastr["'.$typeOfMessage.'"]("'.$message.'")';
-		$toastr .= '</script>';
+		$toastr = '';
+		if ($type == "script") {
+			$toastr .= '<script>';
+			$toastr .= '   $(function() {';
+			$toastr .= 'toastr.options = {';
+			$toastr .= '	"closeButton": false,';
+			$toastr .= '	"debug": false,';
+			$toastr .= '	"newestOnTop": false,';
+			$toastr .= '	"progressBar": false,';
+			$toastr .= '	"positionClass": "toast-top-center",';
+			$toastr .= '	"preventDuplicates": true,';
+			$toastr .= '	"onclick": null,';
+			$toastr .= '	"showDuration": "0",';
+			$toastr .= '	"hideDuration": "0",';
+			$toastr .= '	"timeOut": "1000",';
+			$toastr .= '	"extendedTimeOut": "0",';
+			$toastr .= '	"showEasing": "swing",';
+			$toastr .= '	"hideEasing": "linear",';
+			$toastr .= '	"showMethod": "fadeIn",';
+			$toastr .= '	"hideMethod": "fadeOut" },';
+			$toastr .= '	toastr["'.$typeOfMessage.'"]("'.$message.'")';
+			$toastr .= '	});';
+			$toastr .= '</script>';
+		}
+		else if ($type= "dalam"){
+
+			$toastr .=' toastr.options = {' ;
+			$toastr .= '	"closeButton": false,' ;
+			$toastr .= '	"debug": false,' ;
+			$toastr .= '	"newestOnTop": false,' ;
+			$toastr .= '	"progressBar": false,' ;
+			$toastr .= '	"positionClass": "toast-top-center",' ;
+			$toastr .= '	"preventDuplicates": true,' ;
+			$toastr .= '	"onclick": null,' ;
+			$toastr .= '	"showDuration": "0",' ;
+			$toastr .= '	"hideDuration": "0",' ;
+			$toastr .= '	"timeOut": "1000",' ;
+			$toastr .= '	"extendedTimeOut": "0",' ;
+			$toastr .= '	"showEasing": "swing",' ;
+			$toastr .= '	"hideEasing": "linear",' ;
+			$toastr .= '	"showMethod": "fadeIn",' ;
+			$toastr .= '	"hideMethod": "fadeOut" },' ;
+			$toastr .= '	toastr["'.$typeOfMessage.'"]("'.$message.'")' ;
+		}
+
 
 		return $toastr;
 	}

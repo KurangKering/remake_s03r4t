@@ -123,71 +123,77 @@
     </div>
 </div>
 <script>
+
     var t;
     $(function() {
-        $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
-        {
-            return {
-                "iStart": oSettings._iDisplayStart,
-                "iEnd": oSettings.fnDisplayEnd(),
-                "iLength": oSettings._iDisplayLength,
-                "iTotal": oSettings.fnRecordsTotal(),
-                "iFilteredTotal": oSettings.fnRecordsDisplay(),
-                "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-                "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-            };
-        };
 
-        t = $("#tbl_masuk").dataTable({
-            initComplete: function() {
-                var api = this.api();
-                $('#tbl_masuk_filter input')
-                .off('.DT')
-                .on('keyup.DT', function(e) {
-                    if (e.keyCode == 13) {
-                        api.search(this.value).draw();
-                    }
-                });
-            },
-            oLanguage: {
-                sProcessing: "loading..."
-            },
-            processing: true,
-            serverSide: true,
-            ajax: {"url": "<?php echo base_url('surat_masuk/ajax_lihat'); ?>", "type": "POST"},
-            columns: [
-            {"data" : "nomor_urut" ,
-            "orderable": false},
-            {"data": "no_lembar_disposisi"},
-            {"data": "tgl_masuk"},
-            {"data": "pengirim"},
-            {"data": "detail_perihal", "orderable" : false},
-            {"data": "status", "orderable" : false},
-            {"data": "view", "orderable" : false},
-            ],
-            order: [[1, 'desc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index);
-                if(row.cells[7]) row.cells[7].noWrap = true;
-            }
-        });
-        $('#confirm-delete').on('show.bs.modal', function(e) {
-            $(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id_surat_masuk'));
-        });
-        $('.btn-ok').click(function(event) {
-            var id = $(this).attr('id');
-            doDelete(id);
-            $('#confirm-delete').modal('hide');
-        });
+
+
+      $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
+      {
+        return {
+            "iStart": oSettings._iDisplayStart,
+            "iEnd": oSettings.fnDisplayEnd(),
+            "iLength": oSettings._iDisplayLength,
+            "iTotal": oSettings.fnRecordsTotal(),
+            "iFilteredTotal": oSettings.fnRecordsDisplay(),
+            "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+            "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+        };
+    };
+
+    t = $("#tbl_masuk").dataTable({
+        initComplete: function() {
+            var api = this.api();
+            $('#tbl_masuk_filter input')
+            .off('.DT')
+            .on('keyup.DT', function(e) {
+                if (e.keyCode == 13) {
+                    api.search(this.value).draw();
+                }
+            });
+        },
+        oLanguage: {
+            sProcessing: "loading..."
+        },
+        processing: true,
+        serverSide: true,
+        ajax: {"url": "<?php echo base_url('surat_masuk/ajax_lihat'); ?>", "type": "POST"},
+        columns: [
+        {"data" : "nomor_urut" ,
+        "orderable": false},
+        {"data": "no_lembar_disposisi"},
+        {"data": "tgl_masuk"},
+        {"data": "pengirim"},
+        {"data": "detail_perihal", "orderable" : false},
+        {"data": "status", "orderable" : false},
+        {"data": "view", "orderable" : false},
+        ],
+        order: [[1, 'desc']],
+        rowCallback: function(row, data, iDisplayIndex) {
+            var info = this.fnPagingInfo();
+            var page = info.iPage;
+            var length = info.iLength;
+            var index = page * length + (iDisplayIndex + 1);
+            $('td:eq(0)', row).html(index);
+            if(row.cells[7]) row.cells[7].noWrap = true;
+        }
     });
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('id', $(e.relatedTarget).data('id_surat_masuk'));
+    });
+    $('.btn-ok').click(function(event) {
+        var id = $(this).attr('id');
+        doDelete(id);
+        $('#confirm-delete').modal('hide');
+    });
+});
 
 
     function showDetails(id)
     {
+
+
         $.ajax({
             url: '<?php echo base_url('surat_masuk/ajax_detail'); ?>',
             type: 'POST',
@@ -214,7 +220,10 @@
             data: {id_surat_masuk : id},
             success: function(data, textStatus, jqXHR)
             {
+
                 t.api().ajax.reload();
+
+                <?php echo showNotificationToastr('success', 'Berhasil Delete Data', 'dalam'); ?>
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -277,11 +286,11 @@
             success: function(data){
              if (data == 'OK') {
                  t.api().ajax.reload();
-                $("#modal_disposisi").modal("hide");
-
-            }
-        }
-    });
+                 $("#modal_disposisi").modal("hide");
+                 <?php echo showNotificationToastr('success', 'Berhasil Disposisi Data', 'dalam'); ?>
+             }
+         }
+     });
     });
 }
 
