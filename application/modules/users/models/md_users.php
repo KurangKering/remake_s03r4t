@@ -88,7 +88,7 @@ class Md_users extends CI_Model {
 			title="Detail">
 			<i class="fa fa-info" aria-hidden="true"></i></button>
 
-			<a href="'. base_url('manage/users/') .'ubah/$1" 
+			<a href="'. base_url('users/') .'ubah/$1" 
 			class="btn btn-default btn-md" 
 			title="Ubah">
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -96,7 +96,7 @@ class Md_users extends CI_Model {
 			<button type="button" 
 			class="btn btn-default btn-md" 
 			data-id="$1" 
-			data-href="'. base_url('manage/users/') . 'hapus/$1" 
+			data-href="'. base_url('users/') . 'hapus/$1" 
 			data-toggle="modal" 	
 			data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>', 
 			'id');

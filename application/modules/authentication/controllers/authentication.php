@@ -88,6 +88,12 @@ class Authentication extends CI_Controller {
 	}
 
 
+	public function lupa_password()
+	{
+		$this->load->view('vw_lupa_password');
+	}
+
+
 }
 
 /* End of file akun.php */

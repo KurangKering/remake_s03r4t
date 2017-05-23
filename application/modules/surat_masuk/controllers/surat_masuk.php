@@ -9,6 +9,7 @@ class Surat_masuk extends MY_Controller {
 	}
 	public function dummy()
 	{
+		
 	}
 	public function index()
 	{
@@ -22,6 +23,7 @@ class Surat_masuk extends MY_Controller {
 		/*load js datatables*/
 		$this->template->append_metadata('<script src="'. base_url("assets/plugins/datatables/media/js/jquery.dataTables.min.js") . '"></script>');
 		$this->template->append_metadata('<script src="'. base_url("assets/plugins/datatables/media/js/dataTables.bootstrap.min.js") . '"></script>');
+
 		$this->template->build('vw_lihat');
 	}
 	public function tambah()
@@ -138,7 +140,7 @@ class Surat_masuk extends MY_Controller {
 				$res = $this->md_Global->update_data('surat_masuk', $container, array('id_surat_masuk' => $id));
 				if ($res) {
 					$this->session->set_flashdata('message', showNotificationToastr('success', 'Berhasil Merubah Surat Masuk'));
-					redirect('surat_masuk','refresh');
+					redirect('surat_masuk/lihat','refresh');
 				}
 				else if ($this->db->error()['code'] == 1062) {
 					$this->session->set_flashdata('message', showNotificationToastr('error', 'Duplikat Nomor lembar Disposisi'));
@@ -146,6 +148,9 @@ class Surat_masuk extends MY_Controller {
 				}
 			}
 			else {
+				if (validation_errors() != false) {
+					$data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors());
+				}
 				$surat_masuk = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
 				// $data['tujuan_disposisi'] = $this->md_Global->get_data_where('ref_eselon', array('kode' =>'ESELON IV'));
 				$data['disposisi_tujuan'] = $this->md_surat_masuk->ref_eselon();
@@ -163,9 +168,7 @@ class Surat_masuk extends MY_Controller {
 			$this->template->build('vw_ubah', $data);
 		}
 	}
-	public function hapus()
-	{
-	}
+	
 	/*start from this line is ajax request php */
 	public function ajax_lihat()
 	{
@@ -252,11 +255,10 @@ class Surat_masuk extends MY_Controller {
 		}
 		// $data['data_disposisi'] = $this->md_Global->get_data_single('surat_masuk', array('id_surat_masuk' => $id));
 		$data['data_disposisi'] = $this->md_surat_masuk->data_cetak_disposisi($id);
-		$data['tujuan_disposisi'] = $this->md_Global->get_data_single('sys_groups', array('id' => $data['data_disposisi'][0]['disposisi_tujuan_id']))['name'];
-
 		$data['isi_satu'] = isset($data['data_disposisi'][0]['isi_disposisi']) ? $data['data_disposisi'][0]['isi_disposisi'] : '';
 		$data['isi_dua'] = isset($data['data_disposisi'][1]['isi_disposisi']) ? $data['data_disposisi'][1]['isi_disposisi'] : '';
 		$data['isi_tiga'] = isset($data['data_disposisi'][2]['isi_disposisi']) ? $data['data_disposisi'][2]['isi_disposisi'] : '';
+		$data['kepada'] = $this->md_Global->get_data_single('sys_groups', array('id' => $data['data_disposisi'][0]['disposisi_tujuan_id']))['name'];
 
 		$this->load->view('vw_template_disposisi', $data);
 	}
@@ -388,7 +390,8 @@ class Surat_masuk extends MY_Controller {
 	{
 
 		$idUser = $this->ion_auth->user()->row()->id;
-		$tampung = $this->md_surat_masuk->json_select_sudah_disposisi($idUser);
+//		$tampung = $this->md_surat_masuk->json_select_sudah_disposisi($idUser);
+		$tampung = $this->md_surat_masuk->json_select_sudah_disposisi();
 		echo ($tampung);
 
 		exit;

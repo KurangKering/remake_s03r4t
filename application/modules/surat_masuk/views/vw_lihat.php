@@ -223,7 +223,7 @@
 
                 t.api().ajax.reload();
 
-                <?php echo showNotificationToastr('success', 'Berhasil Delete Data', 'dalam'); ?>
+                <?php echo showNotificationToastr('success', 'Berhasil Hapus data Surat Masuk', 'dalam'); ?>
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

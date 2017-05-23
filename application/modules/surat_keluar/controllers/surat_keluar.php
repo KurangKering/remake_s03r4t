@@ -80,7 +80,8 @@ class Surat_keluar extends MY_Controller {
 
 			$res = $this->md_Global->insert_data('surat_keluar', $container);
 			if ($res) {
-				$this->session->set_flashdata('message', 'Berhasil entry surat Masuk');
+				$this->session->set_flashdata('message', showNotificationToastr('success', 'Berhasil Menambah Data Surat Keluar'));
+
 				redirect('surat_keluar/lihat','refresh');
 			}
 		} else {
@@ -152,10 +153,6 @@ class Surat_keluar extends MY_Controller {
 					'no_resi_pengiriman'    => $this->input->post('no_resi_pengiriman'),
 					'tanggal_pengiriman'    => $this->input->post('tanggal_pengiriman'),
 					'catatan_tambahan'      => $this->input->post('catatan_tambahan'),
-					// 'status_surat_id'       => $status_id,
-					/*'status_surat'          => $tahapan_proses[$status_id],*/
-					// 'pembuat_surat_id'      => $this->input->post('pembuat_surat_id'),
-					// 'pembuat_surat_text'    => $this->input->post('pembuat_surat_text'),
 					'modified_by'         => currentUser('username'),
 					'modified_on'         => date("Y-m-d H:i:s")
 					);
@@ -176,17 +173,20 @@ class Surat_keluar extends MY_Controller {
 				$success = $this->md_Global->update_data('surat_keluar', $container, array('id_surat_keluar' => $id));
 
 				if ($success) {
-					$this->session->set_flashdata('message', 'Berhasil merubah data surat Keluar');
+					$this->session->set_flashdata('message', showNotificationToastr('success', 'Berhasil Merubah Data Surat Keluar'));
+
 					redirect('surat_keluar/lihat','refresh');
 				}
 				else if ($this->db->error()['code'] == 1062) {
-					$this->session->set_flashdata('message', 'Duplikat Nomor Surat Keluar Terdeteksi');
+					$this->session->set_flashdata('message', showNotificationToastr('error', 'Duplikat Nomor Surat Keluar Terdeteksi'));
+					
 					redirect('surat_keluar/ubah/' . $id,'refresh');
 				}
 			}
 			else {
-				echo $this->session->flashdata('message');
-				$data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+				if (validation_errors() != false) {
+					$data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors());
+				}
 				$surat_keluar = $this->md_Global->get_data_single('surat_keluar', array('id_surat_keluar' => $id));
 				$data['surat_keluar'] = $surat_keluar;
 				$data['jenis_surat'] = $this->config->item('surat_keluar')['jenis_surat_keluar'];
@@ -198,8 +198,9 @@ class Surat_keluar extends MY_Controller {
 		} 
 		else 
 		{
-			echo $this->session->flashdata('message');
-			$data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+			if (validation_errors() != false) {
+				$data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors());
+			}
 			$data['surat_keluar'] = $this->md_Global->get_data_single('surat_keluar', array('id_surat_keluar' => $id));
 			$data['jenis_surat'] = $this->config->item('surat_keluar')['jenis_surat_keluar'];
 			$data['tujuan_id']   = $this->config->item('surat_keluar')['tujuan_id'];
@@ -208,12 +209,6 @@ class Surat_keluar extends MY_Controller {
 		}
 
 	}
-
-	public function hapus()
-	{
-
-	}
-
 
 
 	/*start from this line is ajax request php */

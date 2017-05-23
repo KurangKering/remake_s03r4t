@@ -229,7 +229,7 @@ class Md_Surat_masuk extends CI_Model {
 
 
 
-	public function json_select_sudah_disposisi( $id_user)
+	public function json_select_sudah_disposisi( $id_user = null)
 	{
 		
 		$this->datatables->select('
@@ -244,7 +244,7 @@ class Md_Surat_masuk extends CI_Model {
 		->from('surat_masuk')
 		->join('ref_tahapan_proses', 'surat_masuk.status_id = ref_tahapan_proses.id')
 		->join('surat_disposisi', 'surat_disposisi.id_surat_masuk = surat_masuk.id_surat_masuk')
-		->where('surat_disposisi.disposisi_dari_id', $id_user )
+		//->where('surat_disposisi.disposisi_dari_id', $id_user )
 		->group_by('surat_masuk.id_surat_masuk')
 		->add_column('nomor_urut', '0')
 		->add_column(
@@ -252,7 +252,6 @@ class Md_Surat_masuk extends CI_Model {
 			'<a href="#" onClick="showDetails($1)">$2</a>',
 			'id_surat_masuk,perihal'
 			)
-
 		->add_column(
 			'status',
 			'<button 
@@ -266,7 +265,7 @@ class Md_Surat_masuk extends CI_Model {
 			'id_surat_masuk,status_nama'
 			)
 		->add_column(
-			'view_cetak', 
+			'view', 
 			'
 			<button 
 			class="btn btn-default btn-md" 
@@ -275,22 +274,7 @@ class Md_Surat_masuk extends CI_Model {
 			data-tooltip="tooltip" 
 			data-placement="left" 
 			title="Cetak Disposisi">
-			<i class="fa fa-print" aria-hidden="true"></i></button>
-
-		', 
-			'id_surat_masuk')
-		->add_column(
-			'view', 
-			'
-			<button 
-			class="btn btn-default btn-md" 
-			onClick="ShowubahDisposisi($1)" 
-			id="detail" 
-			data-keyboard="false" 
-			data-backdrop="static"
-			title="Detail">
-			Ubah</button>
-			', 
+			<i class="fa fa-print" aria-hidden="true"></i></button>', 
 			'id_surat_masuk');
 
 		return $this->datatables->generate();

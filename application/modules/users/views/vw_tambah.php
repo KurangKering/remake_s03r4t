@@ -3,6 +3,8 @@
     <div class="ibox ">
 
       <div class="ibox-content">
+        <?php echo isset($notificationInspinia) ? $notificationInspinia : ''; ?>
+      
         <form id="frm_tambah_users" data-parsley-validate class="form-horizontal" method="POST"  enctype="multipart/form-data">
 
           <div class="form-group">
@@ -45,7 +47,7 @@
                   <input type="radio"  class="i-checks" name="active" id="active_1"  value="1" checked> Ya
                 </div>
                 <div class="col-md-3">
-                  <input type="radio"  class="i-checks" name="active" id="active_2" value="2"> Tidak
+                  <input type="radio"  class="i-checks" name="active" id="active_2" value="0"> Tidak
                 </div>
               </div>
             </div>

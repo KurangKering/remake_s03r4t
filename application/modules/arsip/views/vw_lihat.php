@@ -192,7 +192,10 @@
 
             success: function(data, textStatus, jqXHR)
             {
+
                 t.api().ajax.reload();
+                <?php echo showNotificationToastr('success', 'Berhasil Hapus data Arsip', 'dalam'); ?>
+
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

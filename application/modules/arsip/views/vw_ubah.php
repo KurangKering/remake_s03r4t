@@ -2,6 +2,8 @@
   <div class="col-lg-12">
     <div class="ibox ">
       <div class="ibox-content">
+        <?php echo isset($notificationInspinia) ? $notificationInspinia : ''; ?>
+      
         <form id="frm_tambah_surat_masuk" data-parsley-validate class="form-horizontal" method="POST"  enctype="multipart/form-data">
           <input type="hidden" name="id" value="<?php echo $arsip['id']; ?>">
           <div class="form-group">

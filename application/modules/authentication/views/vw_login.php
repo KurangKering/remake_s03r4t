@@ -29,6 +29,7 @@
 
             </div>
             <h3>Sistem Informasi Persuratan</h3>
+            <h4>Pengadilan Tinggi Pekanbaru</h4>
             
             <form class="m-t" role="form" action="<?php echo base_url('login') ?>" method="post">
                 <div class="form-group">
@@ -42,10 +43,9 @@
                     <label for="remember">Remember Me:</label>    <input type="checkbox" name="remember" value="1"  id="remember" />
                 </p> -->
                 <?php echo isset($message) ? $message : ''  ?>
-                <a href="#"><small>Lupa password?</small></a>
+                <a href="<?php echo base_url('authentication/lupa_password') ?> "><small>Lupa password?</small></a>
 
-                <!-- <p class="text-muted text-center"><small>Do not have an account?</small></p> -->
-                <!--   <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url('themes/inspinia/'); ?>register.html">Create an account</a> -->
+              
             </form>
 
         </div>

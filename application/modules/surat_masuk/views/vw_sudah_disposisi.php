@@ -163,7 +163,7 @@
             {"data": "pengirim"},
             {"data": "detail_perihal", "orderable" : false},
             {"data": "status", "orderable" : false},
-            {"data": "view_cetak", "orderable" : false},
+            {"data": "view", "orderable" : false},
             ],
             order: [[1, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {

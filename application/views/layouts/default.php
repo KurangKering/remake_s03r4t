@@ -10,10 +10,10 @@
 
   <link href="<?php echo base_url('themes/inspinia/') ?>css/bootstrap.min.css" rel="stylesheet">
   <link href="<?php echo base_url('themes/inspinia/') ?>font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="<?php echo base_url('assets/plugins/toastr/') ?>toastr.min.css" rel="stylesheet">
 
   <link href="<?php echo base_url('themes/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?php echo base_url('themes/inspinia/') ?>css/style.css" rel="stylesheet">
-  <link href="<?php echo base_url('assets/plugins/toastr/') ?>toastr.min.css" rel="stylesheet">
 
 
 

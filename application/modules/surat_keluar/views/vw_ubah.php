@@ -3,7 +3,8 @@
   <div class="col-lg-12">
     <div class="ibox ">
       <div class="ibox-content">
-      <form id="frm_ubah_surat_keluar" data-parsley-validate class="form-horizontal" method="POST"  enctype="multipart/form-data">
+        <?php echo isset($notificationInspinia) ? $notificationInspinia : ''; ?>
+        <form id="frm_ubah_surat_keluar" data-parsley-validate class="form-horizontal" method="POST"  enctype="multipart/form-data">
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="no_surat_keluar">No. Surat Keluar
             </label>
@@ -159,21 +160,21 @@
 
 
 
-  <!-- Modal untuk delete file -->
-  <div class="modal fade bs-example-modal-sm"  id="modal_delete_file" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-          </button>
-          <h5 class="modal-title" id="myModalLabel2">Yakin Ingin Menghapus File  Ini ? </h5>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning btn-ok btn-xs">Delete</button>
-        </div>
+<!-- Modal untuk delete file -->
+<div class="modal fade bs-example-modal-sm"  id="modal_delete_file" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <h5 class="modal-title" id="myModalLabel2">Yakin Ingin Menghapus File  Ini ? </h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-ok btn-xs">Delete</button>
       </div>
     </div>
   </div>
+</div>
 
 <script>
 

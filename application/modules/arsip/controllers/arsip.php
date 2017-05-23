@@ -11,6 +11,7 @@ class Arsip extends MY_Controller {
 
 	public function index()
 	{
+		redirect('lihat');
 	}
 
 
@@ -58,14 +59,14 @@ class Arsip extends MY_Controller {
 
 			$res = $this->md_Global->insert_data('surat_arsip', $container);
 			if ($res) {
-				$this->session->set_flashdata('message', 'Berhasil entry Arsip');
+				$this->session->set_flashdata('message', showNotificationToastr('success', 'Berhasil Menambah Data Arsip'));
 				redirect('arsip/lihat','refresh');
 			}
 		} 
-
 		else {
-			
-			echo validation_errors();
+			if (validation_errors() != false) {
+				$data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors());
+			}
 			$data['nomor_berkas'] = $this->md_Global->get_data_all('sys_box_name');
 			$data['ref_eselon'] = $this->md_Global->get_data_all('ref_eselon');
 
@@ -114,11 +115,13 @@ class Arsip extends MY_Controller {
 
 			$res = $this->md_Global->update_data('surat_arsip', $container, array('id' => $id));
 			if ($res) {
-				$this->session->set_flashdata('message', 'Berhasil merubah Data Arsip');
+				$this->session->set_flashdata('message', showNotificationToastr('success', 'Berhasil Merubah Data Arsip'));
 				redirect('arsip/lihat','refresh');
 			}
 			else if ($this->db->error()['code'] == 1062) {
-				$this->session->set_flashdata('message', 'Duplikat Nomor Arsip Terdeteksi');
+
+				$this->session->set_flashdata('message', showNotificationToastr('error', 'Duplikat Nomor Arsip Terdeteksi'));
+
 				redirect('arsip/ubah/' . $id,'refresh');
 			}
 		}
@@ -126,9 +129,9 @@ class Arsip extends MY_Controller {
 
 		else 
 		{
-			echo validation_errors();
-
-			$data['message']      = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+			if (validation_errors() != false) {
+				$data['notificationInspinia'] = showNotificationInspinia('danger', validation_errors());
+			}
 			$data['arsip']        = $this->md_Global->get_data_single('surat_arsip', array('id' => $id));
 			$data['nomor_berkas'] = $this->md_Global->get_data_all('sys_box_name');
 			$data['ref_eselon']   = $this->md_Global->get_data_all('ref_eselon');

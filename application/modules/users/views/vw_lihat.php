@@ -118,7 +118,7 @@
 
                 if(row.cells[8]) row.cells[8].noWrap = true;
             }
-    });
+        });
         
 
         /*add button tambah*/
@@ -178,6 +178,13 @@
 
             success: function(data, textStatus, jqXHR)
             {
+                if (data == "NO") {
+                    <?php echo showNotificationToastr('error', 'Tidak Dapat Menghapus User', 'dalam'); ?>
+                }
+                else if (data == "YES") {
+                    <?php echo showNotificationToastr('success', 'Berhasil Menghapus Data User', 'dalam'); ?>
+                }
+                
                 t.api().ajax.reload();
             },
             error: function(jqXHR, textStatus, errorThrown)
